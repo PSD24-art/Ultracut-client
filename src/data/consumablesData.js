@@ -1,0 +1,98 @@
+export const consumables = [
+  {
+    id: 1,
+    title: "Laser Source for Fiber Laser Machine",
+    slug: "laser-source",
+    image: "/images/consumables/laser-source.webp",
+  },
+  {
+    id: 2,
+    title: "Cutting Head - Nova Laser",
+    slug: "cutting-head",
+    image: "/images/consumables/cutting-head.webp",
+  },
+  {
+    id: 3,
+    title: "RayTools Laser Cutting Head",
+    slug: "raytools-cutting-head",
+    image: "/images/consumables/raytools-head.webp",
+  },
+  {
+    id: 4,
+    title: "WSX Laser Cutting Head",
+    slug: "wsx-laser-cutting-head",
+    image: "/images/consumables/wsx-head.webp",
+  },
+  {
+    id: 5,
+    title: "Protective Lens",
+    slug: "protective-lens",
+    image: "/images/consumables/protective-lens.webp",
+  },
+  {
+    id: 6,
+    title: "Cutting Nozzle",
+    slug: "cutting-nozzle",
+    image: "/images/consumables/cutting-nozzle.webp",
+  },
+  {
+    id: 7,
+    title: "Ceramic Ring",
+    slug: "ceramic-ring",
+    image: "/images/consumables/ceramic-ring.webp",
+  },
+  {
+    id: 8,
+    title: "Focusing & Collimating Lens",
+    slug: "focusing-collimating-lens",
+    image: "/images/consumables/focus-collimation.webp",
+  },
+  {
+    id: 9,
+    title: "QBH Protective Cap",
+    slug: "qbh-protective-cap",
+    image: "/images/consumables/qbh-cap.webp",
+  },
+  {
+    id: 10,
+    title: "SMC Valve / Solenoid Valve",
+    slug: "smc-valve",
+    image: "/images/consumables/smc-valve.webp",
+  },
+  {
+    id: 11,
+    title: "Control Card",
+    slug: "control-card",
+    image: "/images/consumables/control-card.webp",
+  },
+  {
+    id: 12,
+    title: "RF Cable",
+    slug: "rf-cable",
+    image: "/images/consumables/rf-cable.webp",
+  },
+  {
+    id: 13,
+    title: "Laser Cutting Remote Controller",
+    slug: "remote-controller",
+    image: "/images/consumables/remote-controller.webp",
+  },
+  {
+    id: 14,
+    title: "DNE Consumables",
+    slug: "dne-consumables",
+    image: "/images/consumables/dne.webp",
+  },
+  {
+    id: 15,
+    title: "Sensor Parts",
+    slug: "sensor-parts",
+    image: "/images/consumables/sensor.webp",
+  },
+  {
+    id: 16,
+    title: "Cleaning Consumables",
+    slug: "cleaning-consumables",
+    image: "/images/consumables/cleaning-consumables.webp",
+  },
+];

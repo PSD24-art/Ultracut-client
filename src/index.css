@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+.bg-color {
+  @apply bg-red-500;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+.navigationItemsDesktop {
+  @apply text-gray-700 hover:text-gray-900 hover:cursor-pointer;
+}
+
+.navigationItemsMobile {
+  @apply block text-gray-800 py-2 hover:cursor-pointer;
+}
