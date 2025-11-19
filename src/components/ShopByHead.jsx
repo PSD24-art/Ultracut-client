@@ -73,9 +73,11 @@ export default function ShopByHead({ sections = data, category = "spares" }) {
                 const headSlug = getSlug(title);
                 const url = `/consumables/${category}/${headSlug}`;
                 return (
-                  <Link
+                  <div
                     key={headSlug}
-                    to={url}
+                    onClick={() => {
+                      url;
+                    }}
                     className="group block bg-white border rounded-lg p-3 hover:shadow-md transition"
                     title={title}
                   >
@@ -93,7 +95,7 @@ export default function ShopByHead({ sections = data, category = "spares" }) {
                         View spares
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 );
               })}
             </div>

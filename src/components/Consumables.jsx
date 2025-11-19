@@ -1,7 +1,8 @@
 import { consumables } from "../data/consumablesData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 export default function Consumables() {
+  const navigate = useNavigate();
   return (
     <>
       <section className="w-full py-10 bg-white" id="consumables">
@@ -15,9 +16,9 @@ export default function Consumables() {
           {/* Product Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-12 gap-x-8">
             {consumables.map((item) => (
-              <Link
+              <div
                 key={item.id}
-                to={`/consumables/${item.slug}`}
+                onClick={() => navigate(`/consumables/${item.slug}`)}
                 className="group bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
               >
                 {/* Product Image */}
@@ -35,7 +36,7 @@ export default function Consumables() {
                     {item.title}
                   </h2>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
