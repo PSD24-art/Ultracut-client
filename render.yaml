@@ -3,7 +3,7 @@ services:
     name: frontend-fms
     env: static
     repo: ""
-    branch: deploy
+    branch: dev
     buildCommand: "npm ci && npm run build"
     publishPath: "dist"
     routes:
