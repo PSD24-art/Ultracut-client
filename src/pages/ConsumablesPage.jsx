@@ -6,10 +6,8 @@ import ShopByHead from "../components/ShopByHead";
 export default function ConsumablesPage() {
   return (
     <>
-      <Header />
-      <Consumables />
       <ShopByHead />
-      <Footer />
+      <Consumables />
     </>
   );
 }

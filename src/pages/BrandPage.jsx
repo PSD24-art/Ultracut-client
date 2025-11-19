@@ -5,9 +5,7 @@ import ShopByBrands from "../components/ShopByBrands";
 export default function BrandsPage() {
   return (
     <>
-      <Header />
       <ShopByBrands />
-      <Footer />
     </>
   );
 }

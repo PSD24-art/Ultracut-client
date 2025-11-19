@@ -51,7 +51,6 @@ export default function Items() {
 
   return (
     <>
-      <Header />
       <section className="w-full py-10 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">

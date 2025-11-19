@@ -117,7 +117,6 @@ export default function Cart() {
 
   return (
     <>
-      <Header />
       <div className="w-full min-h-[60vh] bg-white py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>

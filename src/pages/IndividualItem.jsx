@@ -73,8 +73,6 @@ export default function IndividualItem() {
 
   return (
     <>
-      <Header />
-
       <main className="w-full py-8 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
