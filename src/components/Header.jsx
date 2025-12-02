@@ -1,12 +1,15 @@
+// src/components/Header.jsx
 import { ShoppingCart, Search, User, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-function Header() {
+function Header({ onLoginClick }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false); // controls mobile drawer
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
+  const { user } = useAuth();
 
   return (
     <>
@@ -40,12 +43,9 @@ function Header() {
 
             {/* Mobile Right Icons */}
             <div className="md:hidden flex items-center gap-4 z-20">
-              {/* Search */}
               <button className="p-2" onClick={() => setShowSearch((v) => !v)}>
                 <Search className="w-6 h-6 text-gray-700" />
               </button>
-
-              {/* Cart */}
               <button onClick={() => navigate("/cart")} className="p-2">
                 <ShoppingCart className="w-7 h-7 text-gray-700" />
               </button>
@@ -77,8 +77,8 @@ function Header() {
               >
                 Contact
               </div>
+
               <div className="flex gap-1.5">
-                {/* Desktop Search Icon */}
                 <button
                   className="p-2"
                   onClick={() => setShowSearch((v) => !v)}
@@ -86,7 +86,6 @@ function Header() {
                   <Search className="w-6 h-6 text-gray-700" />
                 </button>
 
-                {/* Desktop Cart Icon */}
                 <button
                   className="p-2 relative"
                   onClick={() => navigate("/cart")}
@@ -94,8 +93,16 @@ function Header() {
                   <ShoppingCart className="w-6 h-6 text-gray-700" />
                 </button>
 
-                {/* Desktop User Icon */}
-                <button className="p-2 ml-1">
+                <button
+                  className="p-2 ml-1"
+                  onClick={() => {
+                    if (!user) {
+                      navigate("/login"); // <-- only navigate
+                    } else {
+                      navigate("/profile");
+                    }
+                  }}
+                >
                   <User className="w-6 h-6 text-gray-700" />
                 </button>
               </div>
@@ -122,28 +129,22 @@ function Header() {
         </div>
       </header>
 
-      {/* Mobile drawer overlay + panel (only visible on small screens) */}
-      {/* top-20 aligns drawer below header (header height = 5rem -> top-20) */}
+      {/* Mobile drawer */}
       <div className={`md:hidden`}>
-        {/* Overlay */}
         <div
           className={`fixed inset-0 z-30 transition-opacity duration-300 ${open ? "opacity-60 pointer-events-auto bg-black" : "opacity-0 pointer-events-none"}`}
           onClick={() => setOpen(false)}
           aria-hidden={!open}
         />
 
-        {/* Left drawer panel */}
         <aside
-          className={`fixed top-20 left-0 bottom-0 z-40 w-3/4 max-w-xs bg-white shadow-xl transform transition-transform duration-300 ease-in-out
-            ${open ? "translate-x-0" : "-translate-x-full"}`}
+          className={`fixed top-20 left-0 bottom-0 z-40 w-3/4 max-w-xs bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "-translate-x-full"}`}
           aria-hidden={!open}
         >
-          {/* Header inside drawer */}
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <div className="text-lg font-semibold">Menu</div>
           </div>
 
-          {/* Drawer Content */}
           <div className="px-4 py-4 space-y-3 overflow-y-auto h-full">
             <div
               className="navigationItemsMobile"
@@ -154,7 +155,6 @@ function Header() {
             >
               Home
             </div>
-
             <div
               className="navigationItemsMobile"
               onClick={() => {
@@ -164,7 +164,6 @@ function Header() {
             >
               Brands
             </div>
-
             <div
               className="navigationItemsMobile"
               onClick={() => {
@@ -174,7 +173,6 @@ function Header() {
             >
               Consumables
             </div>
-
             <div
               className="navigationItemsMobile"
               onClick={() => {
@@ -200,18 +198,18 @@ function Header() {
               <button
                 onClick={() => {
                   setOpen(false);
-                  navigate("/user");
+                  if (!user) onLoginClick?.();
+                  else navigate("/profile");
                 }}
                 className="w-full flex items-center gap-3 mt-2 px-3 py-2 rounded-md hover:bg-gray-50"
               >
                 <User className="w-5 h-5 text-gray-700" />
                 <span className="text-sm font-medium text-gray-800">
-                  Login / Account
+                  {user ? "Account" : "Login"}
                 </span>
               </button>
             </div>
 
-            {/* Optional: quick contact / phone */}
             <div className="mt-4 pt-3 border-t text-sm text-gray-600">
               <div className="py-1">📞 +91 98XXXXXXX</div>
               <div className="py-1">📧 info@ultracut.com</div>
