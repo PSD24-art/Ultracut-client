@@ -17,6 +17,7 @@ import BrandPage from "./pages/BrandPage"; // per-brand listing page
 
 import { useAuth } from "./contexts/AuthContext";
 import ConsumableItems from "./pages/ConsumableItems";
+import BIndividualItem from "./pages/BIndividualItems";
 
 function App() {
   const { user, loading } = useAuth();
@@ -77,6 +78,7 @@ function App() {
             {/* Brands */}
             <Route path="/brands" element={<ShopByBrands />} />
             <Route path="/brands/:brand" element={<BrandPage />} />
+            <Route path="/brands/:brand/:title" element={<BIndividualItem />} />
             {/* Consumables listing and product detail */}
             <Route path="/consumables" element={<Consumables />} />
             <Route path="/consumables/:slug" element={<ConsumableItems />} />

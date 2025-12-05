@@ -1,28 +1,46 @@
 // src/pages/Items.jsx
 import React, { useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useConsumables } from "../contexts/ConsumableContext";
+import { useProducts } from "../contexts/ProductContexts";
 import ProductCard from "../components/ProductCard";
 
 export default function ConsumableItems() {
   const { slug } = useParams(); // example: "ceramic-ring"
   const navigate = useNavigate();
-  const { items } = useConsumables(); // backend consumable products
+  const { products, loading } = useProducts();
 
-  // Filter all backend products with the SAME slug
+  // If still loading, show a simple loading state
+  if (loading) {
+    return (
+      <div className="w-full py-20 text-center text-gray-600">
+        Loading products...
+      </div>
+    );
+  }
+
   const list = useMemo(() => {
-    return items.filter(
+    if (!products) return [];
+    return products.filter(
       (p) => String(p.slug).toLowerCase() === String(slug).toLowerCase()
     );
-  }, [items, slug]);
+  }, [products, slug]);
 
   function addToBag(item) {
     const raw = localStorage.getItem("uc_cart_v1");
     const cart = raw ? JSON.parse(raw) : [];
-    const found = cart.find((c) => c.id === item.id);
+    const id = item._id || item.id;
+    const found = cart.find((c) => c.id === id);
 
     if (found) found.qty = (found.qty || 1) + 1;
-    else cart.push({ ...item, qty: 1 });
+    else
+      cart.push({
+        id,
+        title: item.title,
+        price: item.price,
+        mrp: item.mrp,
+        image: item.images?.[0],
+        qty: 1,
+      });
 
     localStorage.setItem("uc_cart_v1", JSON.stringify(cart));
     window.dispatchEvent(new CustomEvent("cart-updated", { detail: { cart } }));
@@ -30,7 +48,18 @@ export default function ConsumableItems() {
   }
 
   function buyNow(item) {
-    navigate("/checkout", { state: { items: [{ ...item, qty: 1 }] } });
+    navigate("/checkout", {
+      state: {
+        items: [
+          {
+            id: item._id || item.id,
+            title: item.title,
+            price: item.price,
+            qty: 1,
+          },
+        ],
+      },
+    });
   }
 
   return (
@@ -63,8 +92,8 @@ export default function ConsumableItems() {
               <ProductCard
                 key={item._id || item.id}
                 item={item}
-                onAddToBag={addToBag}
-                onBuyNow={buyNow}
+                onAddToBag={() => addToBag(item)}
+                onBuyNow={() => buyNow(item)}
               />
             ))}
           </div>

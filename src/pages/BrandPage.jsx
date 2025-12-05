@@ -12,33 +12,24 @@ function slugify(str = "") {
 }
 
 export default function BrandPage() {
-  const { brand: brandSlug } = useParams(); // slug from URL
-  const { products, loading } = useProducts();
+  const { brand: brandSlug } = useParams(); // brandSlug is slugified brand in the URL
+  const { products = [], loading } = useProducts();
 
-  // normalize products array
-  const productArray = Array.isArray(products)
-    ? products
-    : products && products.products && Array.isArray(products.products)
-      ? products.products
-      : products && products.data && Array.isArray(products.data)
-        ? products.data
-        : [];
-
-  // find a canonical brand name by matching slugified brand
+  // canonical brand display name
   const brandName = useMemo(() => {
-    if (!productArray.length) return decodeURIComponent(brandSlug || "");
+    if (!products.length) return decodeURIComponent(brandSlug || "");
     const brands = Array.from(
-      new Set(productArray.map((p) => p.brand || "Unknown"))
+      new Set(products.map((p) => p.brand || "Unknown"))
     );
     const found = brands.find((b) => slugify(b) === String(brandSlug));
     return found || decodeURIComponent(brandSlug || "");
-  }, [productArray, brandSlug]);
+  }, [products, brandSlug]);
 
-  // filter products with that exact brand name
+  // filter products by canonical brand name
   const filtered = useMemo(() => {
-    if (!productArray.length) return [];
-    return productArray.filter((p) => (p.brand || "") === brandName);
-  }, [productArray, brandName]);
+    if (!products.length) return [];
+    return products.filter((p) => (p.brand || "") === brandName);
+  }, [products, brandName]);
 
   return (
     <main className="w-full py-10 bg-white">
@@ -72,15 +63,16 @@ export default function BrandPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered.map((p) => (
               <div
-                key={p.id || p._id || p.slug}
+                key={p._id || p.sku || p.slug}
                 className="bg-white border rounded-md p-3"
               >
+                {/* Link uses brandSlug (slugified brand) and slugified product title */}
                 <Link
-                  to={`/consumables/${p.category}/${encodeURIComponent(p.title)}`}
+                  to={`/brands/${encodeURIComponent(slugify(p.brand || ""))}/${slugify(p.title || "")}`}
                 >
                   <div className="w-full h-40 bg-gray-100 flex items-center justify-center overflow-hidden mb-3">
                     <img
-                      src={p.images?.[0] || p.image || ""}
+                      src={p.images?.[0] || ""}
                       alt={p.title}
                       className="w-full h-full object-contain"
                     />

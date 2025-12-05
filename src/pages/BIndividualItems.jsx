@@ -1,22 +1,21 @@
-// src/pages/IndividualItem.jsx
+// src/pages/BIndividualItem.jsx
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
 
-function slugify(str) {
+function slugify(str = "") {
   return String(str || "")
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/(^-|-$)/g, "");
 }
 
-export default function CIndividualItem() {
-  const { slug, title } = useParams();
+export default function BIndividualItem() {
+  const { brand: brandSlug, title: titleSlug } = useParams(); // brandSlug & titleSlug from URL
   const navigate = useNavigate();
-  const { products, loading } = useProducts();
+  const { products = [], loading } = useProducts();
 
-  // show loading while products are being fetched
   if (loading) {
     return (
       <div className="w-full min-h-[50vh] flex items-center justify-center">
@@ -25,37 +24,36 @@ export default function CIndividualItem() {
     );
   }
 
-  const items = Array.isArray(products) ? products : [];
-
-  // Find matching product — prefer exact title match, otherwise by slug
+  // Find product that matches both brand slug and product title slug.
+  // Fallbacks: match by brand slug + product.slug if titleSlug isn't exact.
   const product =
-    items.find(
+    products.find(
       (p) =>
-        String(p.slug).toLowerCase() === String(slug).toLowerCase() &&
-        slugify(p.title) === String(title || "").toLowerCase()
+        slugify(p.brand || "") === String(brandSlug) &&
+        slugify(p.title || "") === String(titleSlug)
     ) ||
-    items.find(
-      (p) => String(p.slug).toLowerCase() === String(slug).toLowerCase()
+    products.find(
+      (p) =>
+        slugify(p.brand || "") === String(brandSlug) &&
+        String(p.slug || "").toLowerCase() === String(titleSlug).toLowerCase()
     );
 
-  // If still no product → show error
   if (!product) {
     return (
       <div className="w-full min-h-[50vh] flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Product not found</h2>
           <Link
-            to="/consumables"
+            to={`/brands/${encodeURIComponent(brandSlug)}`}
             className="px-4 py-2 bg-blue-600 text-white rounded-md"
           >
-            View All Consumables
+            View Brand
           </Link>
         </div>
       </div>
     );
   }
 
-  // Hooks that depend on product
   const [mainImage, setMainImage] = useState(product.images?.[0] || "");
   const [qty, setQty] = useState(1);
 
@@ -68,7 +66,7 @@ export default function CIndividualItem() {
       const raw = localStorage.getItem("uc_cart_v1");
       const cart = raw ? JSON.parse(raw) : [];
 
-      const id = item._id || item.id;
+      const id = item._id || item.sku || item.id;
       const found = cart.find((c) => c.id === id);
       if (found) found.qty = (found.qty || 1) + quantity;
       else
@@ -92,7 +90,7 @@ export default function CIndividualItem() {
   }
 
   function buyNow(item, quantity = 1) {
-    const id = item._id || item.id;
+    const id = item._id || item.sku || item.id;
     navigate("/checkout", {
       state: {
         items: [{ id, title: item.title, price: item.price, qty: quantity }],
@@ -110,12 +108,16 @@ export default function CIndividualItem() {
           </Link>
           <span className="px-2">/</span>
 
-          <Link to="/consumables" className="hover:underline">
-            Consumables
+          <Link to="/brands" className="hover:underline">
+            Brands
           </Link>
           <span className="px-2">/</span>
-          <Link to={`/consumables/${product.slug}`} className="hover:underline">
-            {product.slug}
+
+          <Link
+            to={`/brands/${encodeURIComponent(brandSlug)}`}
+            className="hover:underline"
+          >
+            {decodeURIComponent(brandSlug)}
           </Link>
           <span className="px-2">/</span>
 
@@ -123,7 +125,7 @@ export default function CIndividualItem() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* LEFT SIDE IMAGE */}
+          {/* LEFT: images */}
           <div className="md:col-span-6">
             <div className="bg-gray-100 rounded-lg overflow-hidden border h-[420px] flex items-center justify-center">
               <img
@@ -152,13 +154,12 @@ export default function CIndividualItem() {
             )}
           </div>
 
-          {/* RIGHT SIDE DETAILS */}
+          {/* RIGHT: details */}
           <div className="md:col-span-6 flex flex-col">
             <h1 className="text-2xl font-semibold text-gray-800">
               {product.title}
             </h1>
 
-            {/* PRICE */}
             <div className="mt-5 flex items-center gap-6">
               <div className="flex flex-col">
                 {product.mrp && (
@@ -166,11 +167,9 @@ export default function CIndividualItem() {
                     ₹{product.mrp}
                   </span>
                 )}
-
                 <span className="text-2xl font-bold text-blue-600">
                   ₹{product.price}
                 </span>
-
                 {discountPercent > 0 && (
                   <span className="text-sm text-green-600 mt-1">
                     {discountPercent}% OFF
@@ -178,7 +177,6 @@ export default function CIndividualItem() {
                 )}
               </div>
 
-              {/* QTY CONTROL */}
               <div className="ml-auto flex items-center gap-3">
                 <div className="flex items-center border rounded-md overflow-hidden">
                   <button
@@ -198,10 +196,8 @@ export default function CIndividualItem() {
               </div>
             </div>
 
-            {/* SHORT DESCRIPTION */}
             <p className="mt-4 text-gray-700">{product.short}</p>
 
-            {/* CTA BUTTONS */}
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => addToBag(product, qty)}
@@ -229,7 +225,6 @@ export default function CIndividualItem() {
               </button>
             </div>
 
-            {/* FULL DESCRIPTION */}
             <div className="mt-8">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">
                 Description
@@ -240,7 +235,6 @@ export default function CIndividualItem() {
               />
             </div>
 
-            {/* SPECS */}
             {product.specs && (
               <div className="mt-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">
@@ -260,7 +254,6 @@ export default function CIndividualItem() {
               </div>
             )}
 
-            {/* STOCK */}
             <div className="mt-6 text-sm text-gray-600">
               {product.stock > 0 ? (
                 <div>In stock: {product.stock} items</div>
