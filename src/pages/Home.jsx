@@ -3,6 +3,7 @@ import Banner from "../components/Banner";
 import ShopByBrands from "../components/ShopByBrands";
 import Footer from "../components/Footer";
 import Consumables from "../components/Consumables";
+import ShopByHead from "../components/ShopByHead";
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
       <ShopByBrands />
       {/* Example consumables / other sections */}
       <Consumables />
+      <ShopByHead />
     </div>
   );
 }

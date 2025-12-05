@@ -77,6 +77,8 @@ export default function UserPage() {
           <button
             className="px-4 py-2 bg-red-600 text-white rounded shadow hover:bg-red-700 transition"
             onClick={async () => {
+              const isConfirm = confirm("Are you sure want to logout?");
+              if (!isConfirm) return;
               await logout();
               navigate("/");
             }}

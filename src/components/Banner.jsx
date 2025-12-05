@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Banner() {
   // Use a background image or product image. For now we keep placeholder content.
   return (
@@ -21,12 +23,12 @@ function Banner() {
               >
                 Shop Now
               </a>
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 className="inline-block px-5 py-2 border border-gray-300 rounded-md text-sm text-gray-700"
               >
                 Contact Sales
-              </a>
+              </Link>
             </div>
           </div>
 

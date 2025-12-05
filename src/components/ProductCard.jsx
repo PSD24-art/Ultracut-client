@@ -1,18 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { slugify } from "../utility/Slugify";
 
 export default function ProductCard({ item, onAddToBag, onBuyNow }) {
   return (
     <div className="group bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
       {/* Product Image */}
       <Link
-        to={`/consumables/${item.category}/${item.slug}`}
+        to={`/consumables/${item.slug}/${slugify(item.title)}`}
         className="block"
         aria-label={`View ${item.title}`}
       >
         <div className="w-full h-32 bg-gray-100 flex items-center justify-center overflow-hidden">
           <img
-            src={item.images?.[0] || ""}
+            src={item.images?.[0] || null}
             alt={item.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />

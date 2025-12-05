@@ -1,18 +1,22 @@
 // src/App.jsx
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 import Home from "./pages/Home";
-import Items from "./pages/Items";
+import Items from "./pages/ConsumableItems";
 import Cart from "./pages/Cart";
-import ConsumablesPage from "./pages/ConsumablesPage";
-import BrandsPage from "./pages/BrandPage";
 import ContactPage from "./pages/static/ContactPage";
-import IndividualItem from "./pages/IndividualItem";
+import IndividualItem from "./pages/CIndividualItem";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import LoginModal from "./components/Login"; // controlled modal
 import UserPage from "./pages/User";
+import Consumables from "./components/Consumables";
+import ShopByBrands from "./components/ShopByBrands";
+import BrandPage from "./pages/BrandPage"; // per-brand listing page
+
 import { useAuth } from "./contexts/AuthContext";
+import ConsumableItems from "./pages/ConsumableItems";
 
 function App() {
   const { user, loading } = useAuth();
@@ -42,7 +46,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="min-h-screen flex flex-col">
         <Header
           onLoginClick={() => {
             // when header asks to open login, navigate to /login and show modal
@@ -60,27 +64,31 @@ function App() {
           />
         )}
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/item" element={<IndividualItem />} />
-
-          {/* /login route is still valid as a deep-link; modal opening is handled via effect above.
-              We render nothing special here to avoid duplication. */}
-          <Route path="/login" element={<Home />} />
-
-          <Route path="/profile" element={<UserPage />} />
-
-          {/* other routes */}
-          <Route
-            path="/consumables/:category/:productSlug"
-            element={<IndividualItem />}
-          />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/brands" element={<BrandsPage />} />
-          <Route path="/consumables" element={<ConsumablesPage />} />
-          <Route path="/consumables/:slug" element={<Items />} />
-        </Routes>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            {/* Cart / Profile / Auth */}
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<UserPage />} />
+            <Route path="/login" element={<Home />} />{" "}
+            {/* deep-link handled via effect */}
+            {/* Static pages */}
+            <Route path="/contact" element={<ContactPage />} />
+            {/* Brands */}
+            <Route path="/brands" element={<ShopByBrands />} />
+            <Route path="/brands/:brand" element={<BrandPage />} />
+            {/* Consumables listing and product detail */}
+            <Route path="/consumables" element={<Consumables />} />
+            <Route path="/consumables/:slug" element={<ConsumableItems />} />
+            <Route
+              path="/consumables/:slug/:title"
+              element={<IndividualItem />}
+            />
+            {/* Legacy / direct item route (optional) */}
+            <Route path="/item" element={<IndividualItem />} />
+            {/* Fallback route could be added here */}
+          </Routes>
+        </main>
 
         <Footer />
       </div>

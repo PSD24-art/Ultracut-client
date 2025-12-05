@@ -5,12 +5,18 @@ import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { ProductsProvider } from "./contexts/ProductContexts.jsx";
+import { ConsumablesProvider } from "./contexts/ConsumableContext.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <Router>
-        <App />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <ProductsProvider>
+        <AuthProvider>
+          <ConsumablesProvider>
+            <App />
+          </ConsumablesProvider>
+        </AuthProvider>
+      </ProductsProvider>
+    </Router>
   </StrictMode>
 );
