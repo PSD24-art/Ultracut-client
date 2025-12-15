@@ -1,49 +1,18 @@
 // Cart.jsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Plus, Minus } from "lucide-react";
-import Header from "../components/Header";
-
-/**
- * Cart page UI
- * - Responsive two-column layout: items list + order summary (sticky on desktop)
- * - Handles qty change, remove item, coupon apply (local logic)
- * - Plug your real handlers into updateCart(), removeFromCart(), checkout()
- *
- * Props / Integration:
- * - Replace initial data source with your cart context / api
- * - Call backend to recalculate prices, validate coupon, create order, etc.
- */
-
-const SAMPLE_CART = [
-  {
-    id: "4",
-    slug: "protective-lens-24-5x2mm",
-    title: "Protective Lens 24.5×2mm",
-    brand: "WSX",
-    price: 350,
-    mrp: 500,
-    qty: 2,
-    image: "https://res.cloudinary.com/demo/image/upload/protective1.jpg",
-  },
-  {
-    id: "7",
-    slug: "laser-nozzle-nl-007",
-    title: "High Precision Nozzle NL-007",
-    brand: "Nova",
-    price: 250,
-    mrp: 350,
-    qty: 1,
-    image: "https://res.cloudinary.com/demo/image/upload/nozzle1.jpg",
-  },
-];
+import { useAuth } from "../contexts/AuthContext";
+import LoginModal from "../components/Login"; // adjust path if needed
 
 function formatPrice(n) {
   return `₹${n.toLocaleString("en-IN")}`;
 }
 
 export default function Cart() {
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const [showLogin, setShowLogin] = useState(false);
 
   // Replace this with your cart context or API on mount
   const [cart, setCart] = useState(() => {
@@ -106,17 +75,41 @@ export default function Cart() {
   }
 
   function checkout() {
+    if (!user) {
+      // open login modal instead of navigating away
+      setShowLogin(true);
+      return; // important — stop here
+    }
+
     // Replace with real checkout flow (create order -> payment)
     if (cart.length === 0) {
       alert("Cart is empty");
       return;
     }
+
     // Example: navigate to checkout page
     navigate("/checkout");
   }
 
+  // handler when login succeeds
+  function onLoginSuccess(data) {
+    setShowLogin(false);
+
+    navigate("/checkout");
+  }
+  function onLoginClose() {
+    setShowLogin(false);
+  }
+
   return (
     <>
+      {showLogin && (
+        <LoginModal
+          open={showLogin}
+          onSuccess={onLoginSuccess}
+          onClose={onLoginClose}
+        />
+      )}
       <div className="w-full min-h-[60vh] bg-white py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>

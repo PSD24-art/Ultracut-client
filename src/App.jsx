@@ -3,10 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Items from "./pages/ConsumableItems";
 import Cart from "./pages/Cart";
 import ContactPage from "./pages/static/ContactPage";
-import IndividualItem from "./pages/CIndividualItem";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import LoginModal from "./components/Login"; // controlled modal
@@ -15,12 +13,14 @@ import Consumables from "./components/Consumables";
 import ShopByBrands from "./components/ShopByBrands";
 import BrandPage from "./pages/BrandPage"; // per-brand listing page
 
-import { useAuth } from "./contexts/AuthContext";
 import ConsumableItems from "./pages/ConsumableItems";
 import BIndividualItem from "./pages/BIndividualItems";
+import CIndividualItem from "./pages/CIndividualItem";
+import SIndividualItem from "./pages/SIndividualItems";
+import Checkout from "./pages/Checkout";
+import WhatsAppButton from "./components/WhatsappButton";
 
 function App() {
-  const { user, loading } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,7 +57,7 @@ function App() {
         />
 
         {/* Only render modal from App (single source of truth) */}
-        {!loading && showLogin && (
+        { showLogin && (
           <LoginModal
             open={showLogin}
             onSuccess={(data) => handleLoginSuccess(data)}
@@ -71,7 +71,8 @@ function App() {
             {/* Cart / Profile / Auth */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<UserPage />} />
-            <Route path="/login" element={<Home />} />{" "}
+            <Route path="/login" element={<Home />} />
+            <Route path="/checkout" element={<Checkout />} />
             {/* deep-link handled via effect */}
             {/* Static pages */}
             <Route path="/contact" element={<ContactPage />} />
@@ -84,13 +85,14 @@ function App() {
             <Route path="/consumables/:slug" element={<ConsumableItems />} />
             <Route
               path="/consumables/:slug/:title"
-              element={<IndividualItem />}
+              element={<CIndividualItem />}
             />
-            {/* Legacy / direct item route (optional) */}
-            <Route path="/item" element={<IndividualItem />} />
+            {/* Item ROute from Search */}
+            <Route path="/item/:slug/:title" element={<SIndividualItem />} />
             {/* Fallback route could be added here */}
           </Routes>
         </main>
+        <WhatsAppButton />
 
         <Footer />
       </div>

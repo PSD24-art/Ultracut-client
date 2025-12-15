@@ -1,15 +1,146 @@
 // src/components/Header.jsx
 import { ShoppingCart, Search, User, Menu, X } from "lucide-react";
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useProducts } from "../contexts/ProductContexts";
+import CartBadge from "./CartBadge";
+
+function slugifyTitle(title = "") {
+  return String(title)
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function normalizeProducts(raw) {
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw;
+  if (raw.data && Array.isArray(raw.data)) return raw.data;
+  if (raw.products && Array.isArray(raw.products)) return raw.products;
+  return [];
+}
+
+function matchesQuery(p, q) {
+  if (!q) return false;
+  const s = q.toLowerCase();
+  if (
+    String(p.title || "")
+      .toLowerCase()
+      .includes(s)
+  )
+    return true;
+  if (
+    String(p.sku || "")
+      .toLowerCase()
+      .includes(s)
+  )
+    return true;
+  if (
+    String(p.brand || "")
+      .toLowerCase()
+      .includes(s)
+  )
+    return true;
+  return false;
+}
+
+function ResultRow({ item, onClick }) {
+  return (
+    <button
+      onClick={() => onClick(item)}
+      className="w-full text-left px-3 py-2 hover:bg-gray-50 flex gap-3 items-center"
+    >
+      <div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center overflow-hidden">
+        <img
+          src={item.images?.[0] || item.image || "/images/placeholder.png"}
+          alt={item.title}
+          className="w-full h-full object-contain"
+        />
+      </div>
+      <div className="flex-1">
+        <div className="text-sm font-medium text-gray-800">{item.title}</div>
+        <div className="text-xs text-gray-500">
+          {item.brand ? `${item.brand} • ` : ""}
+          {item.sku ? item.sku : ""}
+        </div>
+      </div>
+      <div className="text-sm text-gray-600">₹{item.price}</div>
+    </button>
+  );
+}
+
+function useDebounced(value, delay = 200) {
+  const [v, setV] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setV(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return v;
+}
 
 function Header({ onLoginClick }) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false); // controls mobile drawer
+  const location = useLocation();
+  const [open, setOpen] = useState(false); // mobile drawer
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
+  const [showResults, setShowResults] = useState(false);
+  const [results, setResults] = useState([]);
+  const searchRef = useRef(null); // wraps input + results
+
   const { user } = useAuth();
+
+  // products from context
+  const { products: rawProducts, loading: productsLoading } = useProducts();
+  const products = normalizeProducts(rawProducts);
+
+  const debouncedQuery = useDebounced(query, 200);
+
+  // filter when debounced query changes
+  useEffect(() => {
+    if (!debouncedQuery || debouncedQuery.trim() === "") {
+      setResults([]);
+      setShowResults(false);
+      return;
+    }
+    const q = debouncedQuery.trim().toLowerCase();
+    const matches = [];
+    for (const p of products) {
+      if (matchesQuery(p, q)) {
+        matches.push(p);
+        if (matches.length >= 8) break;
+      }
+    }
+    setResults(matches);
+    setShowResults(true);
+  }, [debouncedQuery, products]);
+
+  // close results on outside click (now checks the whole searchRef)
+  useEffect(() => {
+    function onDoc(e) {
+      if (!searchRef.current) return;
+      if (!searchRef.current.contains(e.target)) {
+        setShowResults(false);
+      }
+    }
+    document.addEventListener("click", onDoc);
+    return () => document.removeEventListener("click", onDoc);
+  }, []);
+
+  function openProduct(item) {
+    console.log(item.slug, item.title, "From header url");
+
+    navigate(`/item/${item.slug}/${slugifyTitle(item.title)}`);
+    setQuery("");
+    setShowResults(false);
+    setShowSearch(false);
+  }
+
+  function isActive(path) {
+    return location.pathname === path;
+  }
 
   return (
     <>
@@ -54,34 +185,63 @@ function Header({ onLoginClick }) {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8 ml-auto">
               <div
-                className="navigationItemsDesktop"
+                className={`navigationItemsDesktop hover:underline hover:underline-offset-5${
+                  isActive("/")
+                    ? "text-blue-600 underline underline-offset-5"
+                    : ""
+                }`}
                 onClick={() => navigate("/")}
               >
                 Home
               </div>
+
               <div
-                className="navigationItemsDesktop"
+                className={`navigationItemsDesktop hover:underline hover:underline-offset-5 ${
+                  isActive("/brands")
+                    ? "text-blue-600 underline underline-offset-5"
+                    : ""
+                }`}
                 onClick={() => navigate("/brands")}
               >
                 Brands
               </div>
+
               <div
-                className="navigationItemsDesktop"
+                className={`navigationItemsDesktop hover:underline hover:underline-offset-5${
+                  isActive("/consumables")
+                    ? "text-blue-600 underline underline-offset-5"
+                    : ""
+                }`}
                 onClick={() => navigate("/consumables")}
               >
                 Consumables
               </div>
+
               <div
-                className="navigationItemsDesktop"
+                className={`navigationItemsDesktop hover:underline hover:underline-offset-5${
+                  isActive("/contact")
+                    ? "text-blue-600 underline underline-offset-5"
+                    : ""
+                }`}
                 onClick={() => navigate("/contact")}
               >
                 Contact
               </div>
 
-              <div className="flex gap-1.5">
+              <div className="flex gap-1.5 relative">
                 <button
                   className="p-2"
-                  onClick={() => setShowSearch((v) => !v)}
+                  onClick={() => {
+                    setShowSearch((v) => !v);
+                    if (!showSearch)
+                      setTimeout(
+                        () =>
+                          document
+                            .getElementById("header-search-input")
+                            ?.focus(),
+                        50
+                      );
+                  }}
                 >
                   <Search className="w-6 h-6 text-gray-700" />
                 </button>
@@ -91,19 +251,24 @@ function Header({ onLoginClick }) {
                   onClick={() => navigate("/cart")}
                 >
                   <ShoppingCart className="w-6 h-6 text-gray-700" />
+                  <div className="absolute -top-1 -right-1">
+                    <CartBadge />
+                  </div>
                 </button>
-
                 <button
                   className="p-2 ml-1"
                   onClick={() => {
-                    if (!user) {
-                      navigate("/login"); // <-- only navigate
-                    } else {
-                      navigate("/profile");
-                    }
+                    if (!user) navigate("/login");
+                    else navigate("/profile");
                   }}
                 >
-                  <User className="w-6 h-6 text-gray-700" />
+                  {user ? (
+                    <User className="w-6 h-6 text-gray-700" />
+                  ) : (
+                    <div className="inline-block px-5 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:cursor-pointer">
+                      Login
+                    </div>
+                  )}
                 </button>
               </div>
             </nav>
@@ -112,18 +277,56 @@ function Header({ onLoginClick }) {
 
         {/* Search Bar (slides down) */}
         <div
-          className={`overflow-hidden transition-all duration-300 bg-white ${showSearch ? "max-h-20 py-3" : "max-h-0 py-0"}`}
+          className={` transition-all duration-300 bg-white ${showSearch ? "max-h-80 py-3 overflow-visible" : "max-h-0 py-0 overflow-hidden"}`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3 border rounded-lg px-4 py-2 shadow-sm">
-              <Search className="w-5 h-5 text-gray-500" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products..."
-                className="w-full focus:outline-none text-gray-700"
-              />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            {/* wrap input + results in searchRef */}
+            <div ref={searchRef} className="relative">
+              <div className="flex items-center gap-3 border rounded-lg px-4 py-2 shadow-sm">
+                <Search className="w-5 h-5 text-gray-500" />
+                <input
+                  id="header-search-input"
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search products..."
+                  className="w-full focus:outline-none text-gray-700 bg-transparent"
+                  onFocus={() => {
+                    if (results.length) setShowResults(true);
+                    if (!showSearch) setShowSearch(true);
+                  }}
+                />
+              </div>
+
+              {/* Results dropdown - absolutely positioned so it doesn't change parent's height */}
+              {showResults && results.length > 0 && (
+                <div
+                  className="no-scrollbar absolute left-0 right-0 mt-2 bg-white border shadow-md rounded-md overflow-y-auto z-50"
+                  style={{ marginTop: 10, maxHeight: "18rem" }}
+                >
+                  {results.map((r) => (
+                    <ResultRow
+                      key={r._id || r.id || r.slug}
+                      item={r}
+                      onClick={openProduct}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* No results message */}
+              {showResults && !productsLoading && results.length === 0 && (
+                <div className="absolute left-0 right-0 mt-2 bg-white border shadow-md rounded-md p-3 text-sm text-gray-600 z-50">
+                  No products found
+                </div>
+              )}
+
+              {/* Loading */}
+              {productsLoading && (
+                <div className="absolute left-0 right-0 mt-2 bg-white border shadow-md rounded-md z-50 p-3 text-sm text-gray-600">
+                  Loading products…
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -1,7 +1,25 @@
 @import "tailwindcss";
 
+/*Navigation activa tabs*/
+.navigationItemsDesktop {
+  cursor: pointer;
+  padding-bottom: 2px;
+  position: relative;
+}
+
+.navigationItemsDesktop.active {
+  color: #2563eb; /* blue-600 */
+  border-bottom: 2px solid #2563eb;
+}
+
+/*Basics*/
 .bg-color {
   @apply bg-red-500;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 html,
