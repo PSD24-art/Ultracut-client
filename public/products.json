@@ -1,7 +1,7 @@
 [{
-  "_id": {
-    "$oid": "69317eb697e033144068ac69"
-  },
+  "_id": 
+ "69317eb697e033144068ac69"
+  ,
   "sku": "NL-001",
   "title": "Cutting Nozzle A 1.0mm",
   "slug": "cutting-nozzle-a-1-0mm",
@@ -28,9 +28,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac6a"
-  },
+  "_id": 
+ "69317eb697e033144068ac6a"
+  ,
   "sku": "NL-002",
   "title": "Cutting Nozzle A 1.5mm",
   "slug": "cutting-nozzle",
@@ -57,9 +57,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac6b"
-  },
+  "_id": 
+ "69317eb697e033144068ac6b"
+  ,
   "sku": "NL-003",
   "title": "Ceramic Ring for Raytools BT240",
   "slug": "ceramic-ring",
@@ -86,9 +86,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac6c"
-  },
+  "_id": 
+ "69317eb697e033144068ac6c"
+  ,
   "sku": "NL-004",
   "title": "Protective Lens 24.5×2mm",
   "slug": "protective-lens",
@@ -115,9 +115,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac6d"
-  },
+  "_id": 
+ "69317eb697e033144068ac6d"
+  ,
   "sku": "NL-005",
   "title": "Protective Lens 27.9×4mm",
   "slug": "protective-lens",
@@ -144,9 +144,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac6e"
-  },
+  "_id": 
+ "69317eb697e033144068ac6e"
+  ,
   "sku": "NL-006",
   "title": "Focus Lens 20×4mm",
   "slug": "focus-lens",
@@ -173,9 +173,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac6f"
-  },
+  "_id": 
+ "69317eb697e033144068ac6f"
+  ,
   "sku": "NL-007",
   "title": "Collimation Lens 18×5mm",
   "slug": "collimation-lens",
@@ -201,9 +201,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac70"
-  },
+  "_id": 
+ "69317eb697e033144068ac70"
+  ,
   "sku": "NL-008",
   "title": "Nozzle Single Layer 1.0mm – Precitec",
   "slug": "nozzle",
@@ -230,9 +230,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac71"
-  },
+  "_id": 
+ "69317eb697e033144068ac71"
+  ,
   "sku": "NL-009",
   "title": "Ceramic Ring for WSX NC30",
   "slug": "protective-lens",
@@ -259,9 +259,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac72"
-  },
+  "_id": 
+ "69317eb697e033144068ac72"
+  ,
   "sku": "NL-010",
   "title": "Protective Lens 20×2mm",
   "slug": "protective-lens-20x2mm",
@@ -288,9 +288,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac73"
-  },
+  "_id": 
+ "69317eb697e033144068ac73"
+  ,
   "sku": "NL-011",
   "title": "Focus Lens 20×4mm – German Coated",
   "slug": "focus-lens",
@@ -317,9 +317,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac74"
-  },
+  "_id": 
+ "69317eb697e033144068ac74"
+  ,
   "sku": "NL-012",
   "title": "Nozzle Double Layer 1.0mm – Raytools",
   "slug": "focus-lens",
@@ -346,9 +346,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac75"
-  },
+  "_id": 
+ "69317eb697e033144068ac75"
+  ,
   "sku": "NL-013",
   "title": "WSX 1.2mm Cutting Nozzle",
   "slug": "wsx-cutting-nozzle-1-2mm",
@@ -374,9 +374,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac76"
-  },
+  "_id": 
+ "69317eb697e033144068ac76"
+  ,
   "sku": "NL-014",
   "title": "Lens Holder — Raytools",
   "slug": "lens-holder-raytools",
@@ -403,9 +403,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac77"
-  },
+  "_id": 
+ "69317eb697e033144068ac77"
+  ,
   "sku": "NL-015",
   "title": "O-Ring Set (10pcs) for Laser Nozzles",
   "slug": "o-ring-set-nozzles",
@@ -431,9 +431,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac78"
-  },
+  "_id": 
+ "69317eb697e033144068ac78"
+  ,
   "sku": "NL-016",
   "title": "Nozzle Single Layer 0.8mm – Precitec",
   "slug": "nozzle-single-layer-0-8mm-precitec",
@@ -459,9 +459,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69317eb697e033144068ac79"
-  },
+  "_id": 
+ "69317eb697e033144068ac79"
+  ,
   "sku": "NL-017",
   "title": "Mirror Protective 30×5mm",
   "slug": "mirror-protective-30x5mm",
@@ -487,9 +487,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9d7"
-  },
+  "_id": 
+ "69330477876744343859c9d7"
+  ,
   "sku": "CON-001",
   "title": "Laser Source for Fiber Laser Machine",
   "slug": "laser-source",
@@ -513,9 +513,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9d8"
-  },
+  "_id": 
+ "69330477876744343859c9d8"
+  ,
   "sku": "CON-002",
   "title": "Cutting Head - Nova Laser",
   "slug": "cutting-head",
@@ -538,9 +538,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9d9"
-  },
+  "_id": 
+ "69330477876744343859c9d9"
+  ,
   "sku": "CON-003",
   "title": "RayTools Laser Cutting Head",
   "slug": "raytools-cutting-head",
@@ -564,9 +564,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9da"
-  },
+  "_id": 
+ "69330477876744343859c9da"
+  ,
   "sku": "CON-004",
   "title": "WSX Laser Cutting Head",
   "slug": "wsx-laser-cutting-head",
@@ -588,9 +588,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9db"
-  },
+  "_id": 
+ "69330477876744343859c9db"
+  ,
   "sku": "CON-005",
   "title": "Protective Lens",
   "slug": "protective-lens",
@@ -612,9 +612,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9dc"
-  },
+  "_id": 
+ "69330477876744343859c9dc"
+  ,
   "sku": "CON-006",
   "title": "Cutting Nozzle",
   "slug": "cutting-nozzle",
@@ -636,9 +636,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9dd"
-  },
+  "_id": 
+ "69330477876744343859c9dd"
+  ,
   "sku": "CON-007",
   "title": "Ceramic Ring",
   "slug": "ceramic-ring",
@@ -660,9 +660,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9de"
-  },
+  "_id": 
+ "69330477876744343859c9de"
+  ,
   "sku": "CON-008",
   "title": "Focusing & Collimating Lens",
   "slug": "focusing-collimating-lens",
@@ -684,9 +684,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9df"
-  },
+  "_id": 
+ "69330477876744343859c9df"
+  ,
   "sku": "CON-009",
   "title": "QBH Protective Cap",
   "slug": "qbh-protective-cap",
@@ -707,9 +707,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9e0"
-  },
+  "_id": 
+ "69330477876744343859c9e0"
+  ,
   "sku": "CON-010",
   "title": "SMC Valve / Solenoid Valve",
   "slug": "smc-valve",
@@ -731,9 +731,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9e1"
-  },
+  "_id": 
+ "69330477876744343859c9e1"
+  ,
   "sku": "CON-011",
   "title": "Control Card",
   "slug": "control-card",
@@ -755,9 +755,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9e2"
-  },
+  "_id": 
+ "69330477876744343859c9e2"
+  ,
   "sku": "CON-012",
   "title": "RF Cable",
   "slug": "rf-cable",
@@ -779,9 +779,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9e3"
-  },
+  "_id": 
+ "69330477876744343859c9e3"
+  ,
   "sku": "CON-013",
   "title": "Laser Cutting Remote Controller",
   "slug": "remote-controller",
@@ -803,9 +803,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9e4"
-  },
+  "_id": 
+ "69330477876744343859c9e4"
+  ,
   "sku": "CON-014",
   "title": "DNE Consumables",
   "slug": "dne-consumables",
@@ -827,9 +827,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9e5"
-  },
+  "_id": 
+ "69330477876744343859c9e5"
+  ,
   "sku": "CON-015",
   "title": "Sensor Parts",
   "slug": "sensor-parts",
@@ -850,9 +850,9 @@
   "__v": 0
 },
 {
-  "_id": {
-    "$oid": "69330477876744343859c9e6"
-  },
+  "_id": 
+ "69330477876744343859c9e6"
+  ,
   "sku": "CON-016",
   "title": "Cleaning Consumables",
   "slug": "cleaning-consumables",

@@ -12,7 +12,6 @@ import UserPage from "./pages/User";
 import Consumables from "./components/Consumables";
 import ShopByBrands from "./components/ShopByBrands";
 import BrandPage from "./pages/BrandPage"; // per-brand listing page
-
 import ConsumableItems from "./pages/ConsumableItems";
 import BIndividualItem from "./pages/BIndividualItems";
 import CIndividualItem from "./pages/CIndividualItem";

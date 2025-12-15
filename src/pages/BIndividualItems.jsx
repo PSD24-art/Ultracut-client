@@ -1,5 +1,5 @@
 // src/pages/BIndividualItem.jsx
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
 
@@ -12,7 +12,7 @@ function slugify(str = "") {
 }
 
 export default function BIndividualItem() {
-  const { brand: brandSlug, title: titleSlug } = useParams(); // brandSlug & titleSlug from URL
+  const { brand: brandSlug, title: titleSlug } = useParams();
   const navigate = useNavigate();
   const { products = [], loading } = useProducts();
 
@@ -24,19 +24,22 @@ export default function BIndividualItem() {
     );
   }
 
-  // Find product that matches both brand slug and product title slug.
-  // Fallbacks: match by brand slug + product.slug if titleSlug isn't exact.
-  const product =
-    products.find(
-      (p) =>
-        slugify(p.brand || "") === String(brandSlug) &&
-        slugify(p.title || "") === String(titleSlug)
-    ) ||
-    products.find(
-      (p) =>
-        slugify(p.brand || "") === String(brandSlug) &&
-        String(p.slug || "").toLowerCase() === String(titleSlug).toLowerCase()
+  /* 🔹 Memoized product lookup (CPU optimization) */
+  const product = useMemo(() => {
+    return (
+      products.find(
+        (p) =>
+          slugify(p.brand || "") === String(brandSlug) &&
+          slugify(p.title || "") === String(titleSlug)
+      ) ||
+      products.find(
+        (p) =>
+          slugify(p.brand || "") === String(brandSlug) &&
+          String(p.slug || "").toLowerCase() ===
+            String(titleSlug).toLowerCase()
+      )
     );
+  }, [products, brandSlug, titleSlug]);
 
   if (!product) {
     return (
@@ -66,7 +69,7 @@ export default function BIndividualItem() {
       const raw = localStorage.getItem("uc_cart_v1");
       const cart = raw ? JSON.parse(raw) : [];
 
-      const id = item._id || item.sku || item.id;
+     const id = String(item._id || item.sku || item.id);
       const found = cart.find((c) => c.id === id);
       if (found) found.qty = (found.qty || 1) + quantity;
       else
@@ -99,10 +102,14 @@ export default function BIndividualItem() {
   }
 
   return (
-    <main className="w-full py-8 bg-white">
+    <main
+      className="w-full py-8 bg-white"
+      itemScope
+      itemType="https://schema.org/Product" /* 🔹 SEO: product schema */
+    >
       <div className="max-w-6xl mx-auto px-4">
         {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-4">
+        <nav className="text-sm text-gray-500 mb-4" aria-label="Breadcrumb">
           <Link to="/" className="hover:underline">
             Home
           </Link>
@@ -122,7 +129,7 @@ export default function BIndividualItem() {
           <span className="px-2">/</span>
 
           <span className="text-gray-700">{product.title}</span>
-        </div>
+        </nav>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* LEFT: images */}
@@ -131,7 +138,12 @@ export default function BIndividualItem() {
               <img
                 src={mainImage}
                 alt={product.title}
+                width="420"              /* 🔹 CLS fix */
+                height="420"
+                loading="eager"          /* 🔹 LCP optimized */
+                decoding="async"
                 className="w-full h-full object-contain p-6"
+                itemProp="image"
               />
             </div>
 
@@ -141,11 +153,17 @@ export default function BIndividualItem() {
                   <button
                     key={i}
                     onClick={() => setMainImage(img)}
-                    className={`w-20 h-20 rounded-md overflow-hidden border ${mainImage === img ? "ring-2 ring-blue-500" : ""}`}
+                    className={`w-20 h-20 rounded-md overflow-hidden border ${
+                      mainImage === img ? "ring-2 ring-blue-500" : ""
+                    }`}
                   >
                     <img
                       src={img}
                       alt={`${product.title}-${i}`}
+                      width="80"
+                      height="80"
+                      loading="lazy"       /* 🔹 Lazy thumbnails */
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </button>

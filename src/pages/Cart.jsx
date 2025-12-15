@@ -1,4 +1,4 @@
-// Cart.jsx
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Plus, Minus } from "lucide-react";
@@ -21,7 +21,7 @@ export default function Cart() {
       const raw = localStorage.getItem("uc_cart_v1");
       if (raw) return JSON.parse(raw);
     } catch {}
-    return SAMPLE_CART;
+    return [];
   });
 
   const [coupon, setCoupon] = useState("");
