@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import Banner from "../components/Banner";
 import ShopByBrands from "../components/ShopByBrands";
-import Footer from "../components/Footer";
 import Consumables from "../components/Consumables";
 import ShopByHead from "../components/ShopByHead";
 
@@ -13,7 +12,7 @@ function Home() {
       {/* Shop by Brands */}
       <ShopByBrands />
       {/* Example consumables / other sections */}
-      <Consumables />
+      <Consumables /> 
       <ShopByHead />
     </div>
   );

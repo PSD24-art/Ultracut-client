@@ -3,56 +3,91 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import fetchFn from "../utility/FetchFn";
 
 const AuthContext = createContext(null);
+const USER_SNAPSHOT_KEY = "user_snapshot";
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // important: start true
+  // 1️⃣ Hydrate user instantly from localStorage (UI hint only)
+  const [user, setUser] = useState(() => {
+    try {
+      const cached = localStorage.getItem(USER_SNAPSHOT_KEY);
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  // 2️⃣ Loading is now NON-BLOCKING
+  const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState(null);
 
-  // On mount -> ask server who the user is (cookie will be sent automatically)
+  // 3️⃣ Background verification (does NOT block render)
   useEffect(() => {
-    let mounted = true;
-    const init = async () => {
-      setLoading(true);
+    let cancelled = false;
+
+    const verifyUser = async () => {
       try {
-        const data = await fetchFn("/user/me", "GET"); // fetchFn uses credentials: include
-        if (!mounted) return;
+        const data = await fetchFn("/user/me", "GET");
+
+        if (cancelled) return;
+
         if (data?.user) {
           setUser(data.user);
+          localStorage.setItem(
+            USER_SNAPSHOT_KEY,
+            JSON.stringify(data.user)
+          );
           setAuthError(null);
         } else {
           setUser(null);
-          setAuthError(data?.message || null);
+          localStorage.removeItem(USER_SNAPSHOT_KEY);
         }
       } catch (err) {
-        // network / 401 etc.
-        console.warn("Auth init failed:", err?.message || err);
-        if (mounted) {
+        if (!cancelled) {
+          console.warn("Auth verification failed:", err?.message || err);
           setUser(null);
+          localStorage.removeItem(USER_SNAPSHOT_KEY);
           setAuthError(err?.message || "Auth check failed");
         }
-      } finally {
-        if (mounted) setLoading(false);
       }
     };
 
-    init();
+    verifyUser();
+
     return () => {
-      mounted = false;
+      cancelled = true;
     };
   }, []);
 
-  // Called after successful verify OTP (cookie-based): refresh user by calling /api/user/me
+  // 4️⃣ Called after OTP verify / login success
   const login = async (maybeUser = null) => {
-    if (maybeUser) return setUser(maybeUser);
+    // Optimistic update if backend already returned user
+    if (maybeUser) {
+      setUser(maybeUser);
+      localStorage.setItem(
+        USER_SNAPSHOT_KEY,
+        JSON.stringify(maybeUser)
+      );
+      return;
+    }
+
+    // Otherwise refresh from server
     try {
       const data = await fetchFn("/user/me", "GET");
-      if (data?.user) setUser(data.user);
+      if (data?.user) {
+        setUser(data.user);
+        localStorage.setItem(
+          USER_SNAPSHOT_KEY,
+          JSON.stringify(data.user)
+        );
+      }
     } catch (err) {
-      console.warn("login->user/me failed", err);
+      console.warn("login -> user/me failed", err);
       setUser(null);
+      localStorage.removeItem(USER_SNAPSHOT_KEY);
     }
   };
+
+  // 5️⃣ Logout clears both server + UI snapshot
   const logout = async () => {
     try {
       await fetchFn("/auth/logout", "GET");
@@ -60,12 +95,20 @@ export function AuthProvider({ children }) {
       console.warn("logout error", e);
     } finally {
       setUser(null);
+      localStorage.removeItem(USER_SNAPSHOT_KEY);
     }
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, login, logout, loading, authError }}
+      value={{
+        user,
+        setUser,
+        login,
+        logout,
+        loading,
+        authError
+      }}
     >
       {children}
     </AuthContext.Provider>

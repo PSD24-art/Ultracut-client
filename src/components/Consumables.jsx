@@ -77,6 +77,8 @@ export default function Consumables() {
                   src={
                     item.images?.[0] || item.image || "/images/placeholder.png"
                   }
+                  width={""}
+                  lazy="loading"
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />

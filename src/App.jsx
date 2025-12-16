@@ -1,23 +1,28 @@
 // src/App.jsx
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Cart from "./pages/Cart";
-import ContactPage from "./pages/static/ContactPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import LoginModal from "./components/Login"; // controlled modal
-import UserPage from "./pages/User";
-import Consumables from "./components/Consumables";
-import ShopByBrands from "./components/ShopByBrands";
-import BrandPage from "./pages/BrandPage"; // per-brand listing page
-import ConsumableItems from "./pages/ConsumableItems";
-import BIndividualItem from "./pages/BIndividualItems";
-import CIndividualItem from "./pages/CIndividualItem";
-import SIndividualItem from "./pages/SIndividualItems";
-import Checkout from "./pages/Checkout";
-import WhatsAppButton from "./components/WhatsappButton";
+
+// ---------- Pages (lazy) ----------
+const Home = lazy(() => import("./pages/Home"));
+const Cart = lazy(() => import("./pages/Cart"));
+const UserPage = lazy(() => import("./pages/User"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const BrandPage = lazy(() => import("./pages/BrandPage"));
+const ConsumableItems = lazy(() => import("./pages/ConsumableItems"));
+const BIndividualItem = lazy(() => import("./pages/BIndividualItems"));
+const CIndividualItem = lazy(() => import("./pages/CIndividualItem"));
+const SIndividualItem = lazy(() => import("./pages/SIndividualItems"));
+const ContactPage = lazy(() => import("./pages/static/ContactPage"));
+
+// ---------- Components (lazy by interaction / route) ----------
+const LoginModal = lazy(() => import("./components/Login"));
+const Consumables = lazy(() => import("./components/Consumables"));
+const ShopByBrands = lazy(() => import("./components/ShopByBrands"));
+const WhatsAppButton = lazy(() => import("./components/WhatsappButton"));
+
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);

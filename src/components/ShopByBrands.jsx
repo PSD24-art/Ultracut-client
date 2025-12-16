@@ -1,7 +1,8 @@
 // src/components/ShopByBrands.jsx
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useProducts } from "../contexts/ProductContexts";
+import { useProducts  } from "../contexts/ProductContexts";
+import Loader from "./Loader";
 
 function slugify(str = "") {
   return String(str)
@@ -87,11 +88,7 @@ export default function ShopByBrands() {
   // show basic loading / empty states
   if (loading) {
     return (
-      <section id="brands" className="w-full py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
-          Loading brands…
-        </div>
-      </section>
+     <Loader/>
     );
   }
 

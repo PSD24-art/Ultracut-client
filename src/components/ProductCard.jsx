@@ -15,6 +15,7 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
           <img
             src={item.images?.[0] || null}
             alt={item.title}
+            lazy="loading"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </div>

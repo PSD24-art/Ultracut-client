@@ -1,7 +1,7 @@
 // src/components/Header.jsx
 import { ShoppingCart, Search, User, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useProducts } from "../contexts/ProductContexts";
 import CartBadge from "./CartBadge";
