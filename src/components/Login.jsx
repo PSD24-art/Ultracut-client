@@ -33,7 +33,7 @@ export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
     if (resendCooldown <= 0) return;
     const t = setInterval(
       () => setResendCooldown((c) => Math.max(0, c - 1)),
-      1000
+      1000,
     );
     return () => clearInterval(t);
   }, [resendCooldown]);

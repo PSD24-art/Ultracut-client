@@ -1,5 +1,4 @@
 // src/components/Consumables.jsx
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
 
@@ -13,21 +12,13 @@ function normalizeProducts(raw) {
 
 export default function Consumables() {
   const navigate = useNavigate();
-  const { products: rawProducts, loading } = useProducts();
+  const rawProducts = useProducts();
 
   const products = normalizeProducts(rawProducts);
 
-  if (loading) {
-    return (
-      <div className="w-full py-20 text-center text-gray-600">
-        Loading products...
-      </div>
-    );
-  }
-
   // filter only items that belong to category 'consumables' (case-insensitive)
   const consumableItems = products.filter(
-    (p) => String(p.category || "").toLowerCase() === "consumables"
+    (p) => String(p.category || "").toLowerCase() === "consumables",
   );
 
   // dedupe by slug (keep first occurrence)
@@ -43,7 +34,7 @@ export default function Consumables() {
 
   // sort by title
   unique.sort((a, b) =>
-    String(a.title || "").localeCompare(String(b.title || ""))
+    String(a.title || "").localeCompare(String(b.title || "")),
   );
 
   if (!unique.length) {

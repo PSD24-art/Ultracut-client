@@ -1,8 +1,7 @@
 // src/components/ShopByBrands.jsx
 import { useMemo, useRef, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useProducts  } from "../contexts/ProductContexts";
-import Loader from "./Loader";
+import { useProducts } from "../contexts/ProductContexts";
 
 function slugify(str = "") {
   return String(str)
@@ -15,7 +14,7 @@ function slugify(str = "") {
 export default function ShopByBrands() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { products: rawProducts, loading } = useProducts();
+  const rawProducts = useProducts();
 
   // normalize to array
   const products = useMemo(() => {
@@ -86,11 +85,6 @@ export default function ShopByBrands() {
   }
 
   // show basic loading / empty states
-  if (loading) {
-    return (
-     <Loader/>
-    );
-  }
 
   if (!products.length || !brands.length) {
     return (

@@ -29,13 +29,11 @@ export function AuthProvider({ children }) {
         const data = await fetchFn("/user/me", "GET");
 
         if (cancelled) return;
-
         if (data?.user) {
+          console.log(data);
+
           setUser(data.user);
-          localStorage.setItem(
-            USER_SNAPSHOT_KEY,
-            JSON.stringify(data.user)
-          );
+          localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(data.user));
           setAuthError(null);
         } else {
           setUser(null);
@@ -63,22 +61,17 @@ export function AuthProvider({ children }) {
     // Optimistic update if backend already returned user
     if (maybeUser) {
       setUser(maybeUser);
-      localStorage.setItem(
-        USER_SNAPSHOT_KEY,
-        JSON.stringify(maybeUser)
-      );
+      localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(maybeUser));
       return;
     }
 
     // Otherwise refresh from server
     try {
       const data = await fetchFn("/user/me", "GET");
+
       if (data?.user) {
         setUser(data.user);
-        localStorage.setItem(
-          USER_SNAPSHOT_KEY,
-          JSON.stringify(data.user)
-        );
+        localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(data.user));
       }
     } catch (err) {
       console.warn("login -> user/me failed", err);
@@ -107,7 +100,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         loading,
-        authError
+        authError,
       }}
     >
       {children}

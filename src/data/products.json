@@ -1,0 +1,744 @@
+[
+  {
+    "_id": "69317eb697e033144068ac69",
+    "sku": "NL-001",
+    "title": "Cutting Nozzle A 1.0mm",
+    "slug": "cutting-nozzle-a-1-0mm",
+    "brand": "Raytools",
+    "head": "BT240",
+    "category": "consumables",
+    "price": 120,
+    "mrp": 180,
+    "stock": 40,
+    "images": ["https://res.cloudinary.com/demo/image/upload/nozzle1.jpg"],
+    "short": "High precision Raytools nozzle for BT240 head.",
+    "description": "<p>High-quality laser cutting nozzle designed for BT240 heads. Ensures stable focal length and clean cut.</p>",
+    "specs": {
+      "diameter": "1.0mm",
+      "material": "Copper"
+    },
+    "meta": {
+      "title": "Cutting Nozzle A 1.0mm - Raytools",
+      "description": "Raytools BT240 nozzle for clean and accurate laser cutting.",
+      "keywords": "cutting nozzle, raytools nozzle, bt240"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac6a",
+    "sku": "NL-002",
+    "title": "Cutting Nozzle A 1.5mm",
+    "slug": "cutting-nozzle",
+    "brand": "Raytools",
+    "head": "BT240",
+    "category": "rf-cable",
+    "price": 130,
+    "mrp": 190,
+    "stock": 50,
+    "images": ["https://res.cloudinary.com/demo/image/upload/nozzle2.jpg"],
+    "short": "Raytools 1.5mm nozzle for stable nitrogen/oxygen cutting.",
+    "description": "<p>Precision-machined nozzle suitable for mild steel, stainless steel, and aluminum cutting applications.</p>",
+    "specs": {
+      "diameter": "1.5mm",
+      "material": "Copper"
+    },
+    "meta": {
+      "title": "Cutting Nozzle 1.5mm - Raytools",
+      "description": "High-performance 1.5mm Raytools nozzle for BT240.",
+      "keywords": "raytools nozzle, 1.5mm nozzle"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac6b",
+    "sku": "NL-003",
+    "title": "Ceramic Ring for Raytools BT240",
+    "slug": "ceramic-ring",
+    "brand": "Raytools",
+    "head": "BT240",
+    "category": "consumables",
+    "price": 450,
+    "mrp": 600,
+    "stock": 20,
+    "images": ["https://res.cloudinary.com/demo/image/upload/ceramic1.jpg"],
+    "short": "High durability ceramic ring for Raytools BT240.",
+    "description": "<p>Premium ceramic ring with heat-resistant material for consistent laser performance.</p>",
+    "specs": {
+      "material": "Ceramic",
+      "compatibility": "BT240"
+    },
+    "meta": {
+      "title": "Ceramic Ring BT240 - Raytools",
+      "description": "Long-lasting ceramic ring for Raytools BT240 heads.",
+      "keywords": "ceramic ring, raytools, bt240"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac6c",
+    "sku": "NL-004",
+    "title": "Protective Lens 24.5×2mm",
+    "slug": "protective-lens",
+    "brand": "WSX",
+    "head": "WSX-NC30",
+    "category": "rf-cable",
+    "price": 350,
+    "mrp": 500,
+    "stock": 60,
+    "images": ["https://res.cloudinary.com/demo/image/upload/protective1.jpg"],
+    "short": "Anti-reflective coated protective lens for WSX heads.",
+    "description": "<p>Protective lens with AR coating ensuring extended head life and stable cutting protection.</p>",
+    "specs": {
+      "size": "24.5x2mm",
+      "coating": "AR"
+    },
+    "meta": {
+      "title": "Protective Lens 24.5×2mm - WSX",
+      "description": "High-quality protective lens for WSX laser heads.",
+      "keywords": "protective lens, wsx lens"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac6d",
+    "sku": "NL-005",
+    "title": "Protective Lens 27.9×4mm",
+    "slug": "protective-lens",
+    "brand": "Raytools",
+    "head": "BT210",
+    "category": "consumables",
+    "price": 420,
+    "mrp": 550,
+    "stock": 30,
+    "images": ["https://res.cloudinary.com/demo/image/upload/protective2.jpg"],
+    "short": "Thick protective lens ideal for high-power cutting.",
+    "description": "<p>Designed for heavy-duty cutting operations at 6kW and 12kW configurations.</p>",
+    "specs": {
+      "size": "27.9x4mm",
+      "coating": "AR+"
+    },
+    "meta": {
+      "title": "Protective Lens 27.9×4mm - Raytools",
+      "description": "Premium thick lens for Raytools BT210.",
+      "keywords": "protective lens, raytools bt210"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac6e",
+    "sku": "NL-006",
+    "title": "Focus Lens 20×4mm",
+    "slug": "focus-lens",
+    "brand": "Raytools",
+    "head": "BT240",
+    "category": "rf-cable",
+    "price": 1800,
+    "mrp": 2200,
+    "stock": 12,
+    "images": ["https://res.cloudinary.com/demo/image/upload/focus1.jpg"],
+    "short": "High precision focus lens for Raytools BT240.",
+    "description": "<p>Delivers tight beam quality for accurate cutting performance.</p>",
+    "specs": {
+      "size": "20x4mm",
+      "focal_length": "100mm"
+    },
+    "meta": {
+      "title": "Focus Lens 20×4mm - Raytools",
+      "description": "Premium focus lens for accurate and clean laser cutting.",
+      "keywords": "focus lens, laser focus"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac6f",
+    "sku": "NL-007",
+    "title": "Collimation Lens 18×5mm",
+    "slug": "collimation-lens",
+    "brand": "Raytools",
+    "head": "BT240",
+    "category": "rf-cable",
+    "price": 1600,
+    "mrp": 2000,
+    "stock": 10,
+    "images": ["https://res.cloudinary.com/demo/image/upload/collimation1.jpg"],
+    "short": "Collimation lens for stable beam shaping.",
+    "description": "<p>Ensures optimal collimation for consistent beam diameter during cutting.</p>",
+    "specs": {
+      "size": "18x5mm"
+    },
+    "meta": {
+      "title": "Collimation Lens 18×5mm - Raytools",
+      "description": "High-quality collimation lens for precise laser cutting.",
+      "keywords": "collimation lens"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac70",
+    "sku": "NL-008",
+    "title": "Nozzle Single Layer 1.0mm – Precitec",
+    "slug": "nozzle",
+    "brand": "Precitec",
+    "head": "LightCutter",
+    "category": "rf-cable",
+    "price": 150,
+    "mrp": 200,
+    "stock": 70,
+    "images": ["https://res.cloudinary.com/demo/image/upload/nozzle3.jpg"],
+    "short": "Single layer cutting nozzle for Precitec LightCutter.",
+    "description": "<p>Designed for fast airflow and minimal spatter in stainless steel cutting.</p>",
+    "specs": {
+      "material": "H59 Brass",
+      "diameter": "1.0mm"
+    },
+    "meta": {
+      "title": "Precitec Single Layer Nozzle 1.0mm",
+      "description": "High-speed cutting nozzle for Precitec laser heads.",
+      "keywords": "precitec nozzle"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac71",
+    "sku": "NL-009",
+    "title": "Ceramic Ring for WSX NC30",
+    "slug": "protective-lens",
+    "brand": "WSX",
+    "head": "NC30",
+    "category": "rf-cable",
+    "price": 480,
+    "mrp": 650,
+    "stock": 25,
+    "images": ["https://res.cloudinary.com/demo/image/upload/ceramic2.jpg"],
+    "short": "Heat-resistant WSX ceramic ring.",
+    "description": "<p>Durable ceramic ring with excellent thermal stability for NC30 heads.</p>",
+    "specs": {
+      "material": "Ceramic",
+      "compatibility": "NC30"
+    },
+    "meta": {
+      "title": "WSX NC30 Ceramic Ring",
+      "description": "Long-lasting ceramic ring for WSX NC30 heads.",
+      "keywords": "wsx ceramic ring"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac72",
+    "sku": "NL-010",
+    "title": "Protective Lens 20×2mm",
+    "slug": "protective-lens-20x2mm",
+    "brand": "Raytools",
+    "head": "BT210",
+    "category": "rf-cable",
+    "price": 300,
+    "mrp": 450,
+    "stock": 55,
+    "images": ["https://res.cloudinary.com/demo/image/upload/protective3.jpg"],
+    "short": "Compact protective lens for mid-power laser heads.",
+    "description": "<p>High-temperature protective design suitable for 3kW and 4kW machines.</p>",
+    "specs": {
+      "size": "20x2mm",
+      "coating": "AR"
+    },
+    "meta": {
+      "title": "Protective Lens 20×2mm",
+      "description": "Durable protective lens for medium power laser systems.",
+      "keywords": "protective lens raytools"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac73",
+    "sku": "NL-011",
+    "title": "Focus Lens 20×4mm – German Coated",
+    "slug": "focus-lens",
+    "brand": "HighGrade",
+    "head": "Universal",
+    "category": "rf-cable",
+    "price": 2200,
+    "mrp": 2600,
+    "stock": 15,
+    "images": ["https://res.cloudinary.com/demo/image/upload/focus2.jpg"],
+    "short": "German coated premium focus lens.",
+    "description": "<p>Improved focusing stability for fine detail cutting and minimal heat-affected zone.</p>",
+    "specs": {
+      "coating": "German AR+",
+      "focal_length": "125mm"
+    },
+    "meta": {
+      "title": "German Coated Focus Lens 20×4mm",
+      "description": "Premium long-life focus lens for precision cutting.",
+      "keywords": "focus lens german coating"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac74",
+    "sku": "NL-012",
+    "title": "Nozzle Double Layer 1.0mm – Raytools",
+    "slug": "focus-lens",
+    "brand": "Raytools",
+    "head": "BT240",
+    "category": "consumables",
+    "price": 180,
+    "mrp": 230,
+    "stock": 35,
+    "images": ["https://res.cloudinary.com/demo/image/upload/nozzle4.jpg"],
+    "short": "Double-layer nozzle for smoother airflow.",
+    "description": "<p>Reduces turbulence and spatter for high-quality cutting surface.</p>",
+    "specs": {
+      "type": "Double Layer",
+      "diameter": "1.0mm"
+    },
+    "meta": {
+      "title": "Double Layer Raytools Nozzle",
+      "description": "Improved airflow and cutting performance.",
+      "keywords": "raytools double layer nozzle"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac75",
+    "sku": "NL-013",
+    "title": "WSX 1.2mm Cutting Nozzle",
+    "slug": "wsx-cutting-nozzle-1-2mm",
+    "brand": "WSX",
+    "head": "NC30",
+    "category": "rf-cable",
+    "price": 140,
+    "mrp": 200,
+    "stock": 80,
+    "images": ["https://res.cloudinary.com/demo/image/upload/nozzle5.jpg"],
+    "short": "High-flow WSX nozzle for NC30.",
+    "description": "<p>Designed for fast nitrogen cutting with clean kerf lines.</p>",
+    "specs": {
+      "diameter": "1.2mm"
+    },
+    "meta": {
+      "title": "WSX 1.2mm Cutting Nozzle",
+      "description": "High-speed nitrogen cutting nozzle for WSX NC30.",
+      "keywords": "wsx nozzle"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac76",
+    "sku": "NL-014",
+    "title": "Lens Holder — Raytools",
+    "slug": "lens-holder-raytools",
+    "brand": "Raytools",
+    "head": "BT240",
+    "category": "consumables",
+    "price": 950,
+    "mrp": 1200,
+    "stock": 10,
+    "images": ["https://res.cloudinary.com/demo/image/upload/holder1.jpg"],
+    "short": "Original Raytools lens holder for BT240.",
+    "description": "<p>Precision-machined holder for stable lens positioning.</p>",
+    "specs": {
+      "material": "Steel",
+      "compatibility": "BT240"
+    },
+    "meta": {
+      "title": "Raytools Lens Holder",
+      "description": "Original Raytools BT240 lens holder.",
+      "keywords": "lens holder raytools"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac77",
+    "sku": "NL-015",
+    "title": "O-Ring Set (10pcs) for Laser Nozzles",
+    "slug": "o-ring-set-nozzles",
+    "brand": "Generic",
+    "head": "Universal",
+    "category": "consumables",
+    "price": 120,
+    "mrp": 180,
+    "stock": 100,
+    "images": ["https://res.cloudinary.com/demo/image/upload/oring1.jpg"],
+    "short": "High-temperature O-rings for nozzle sealing.",
+    "description": "<p>Ensures leak-free gas flow and stable cutting performance.</p>",
+    "specs": {
+      "quantity": "10pcs"
+    },
+    "meta": {
+      "title": "Laser Nozzle O-Ring Set",
+      "description": "Heat-resistant O-rings for universal nozzle heads.",
+      "keywords": "o-ring nozzle"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac78",
+    "sku": "NL-016",
+    "title": "Nozzle Single Layer 0.8mm – Precitec",
+    "slug": "nozzle-single-layer-0-8mm-precitec",
+    "brand": "Precitec",
+    "head": "LightCutter",
+    "category": "rf-cable",
+    "price": 140,
+    "mrp": 180,
+    "stock": 50,
+    "images": ["https://res.cloudinary.com/demo/image/upload/nozzle6.jpg"],
+    "short": "Small-diameter nozzle for fine cutting.",
+    "description": "<p>Ideal for thin sheet metal and detail work.</p>",
+    "specs": {
+      "diameter": "0.8mm"
+    },
+    "meta": {
+      "title": "Precitec 0.8mm Nozzle",
+      "description": "Precision nozzle for light cutting tasks.",
+      "keywords": "precitec small nozzle"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69317eb697e033144068ac79",
+    "sku": "NL-017",
+    "title": "Mirror Protective 30×5mm",
+    "slug": "mirror-protective-30x5mm",
+    "brand": "Generic",
+    "head": "CO2",
+    "category": "consumables",
+    "price": 600,
+    "mrp": 800,
+    "stock": 18,
+    "images": ["https://res.cloudinary.com/demo/image/upload/mirror1.jpg"],
+    "short": "Protective mirror for CO2 laser machines.",
+    "description": "<p>Durable mirror with gold coating for long operational life.</p>",
+    "specs": {
+      "size": "30x5mm"
+    },
+    "meta": {
+      "title": "Protective Mirror 30×5mm",
+      "description": "High durability mirror for CO2 lasers.",
+      "keywords": "co2 mirror"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9d7",
+    "sku": "CON-001",
+    "title": "Laser Source for Fiber Laser Machine",
+    "slug": "laser-source",
+    "brand": "Nova Laser",
+    "head": "Nova Laser LS1000 Head",
+    "category": "rf-cable",
+    "price": 175000,
+    "mrp": 185000,
+    "stock": 10,
+    "images": ["/images/consumables/laser-source.webp"],
+    "short": "High-performance laser source for fiber laser cutting machines.",
+    "description": "...",
+    "specs": {
+      "brand": "Nova Laser",
+      "type": "Fiber Laser Source",
+      "powerOptions": "1kW – 6kW",
+      "warranty": "24 Months"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9d8",
+    "sku": "CON-002",
+    "title": "Cutting Head - Nova Laser",
+    "slug": "cutting-head",
+    "brand": "Nova Laser",
+    "head": "Nova Laser NL-110 Head",
+    "category": "rf-cable",
+    "price": 115000,
+    "mrp": 125000,
+    "stock": 15,
+    "images": ["/images/consumables/cutting-head.webp"],
+    "short": "Durable cutting head designed for precision fiber laser cutting.",
+    "description": "...",
+    "specs": {
+      "brand": "Nova Laser",
+      "focus": "Auto / Manual",
+      "cooling": "Water-cooled"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9d9",
+    "sku": "CON-003",
+    "title": "RayTools Laser Cutting Head",
+    "slug": "raytools-cutting-head",
+    "brand": "RayTools",
+    "head": "RayTools BM111/BM110 Head",
+    "category": "consumables",
+    "price": 115000,
+    "mrp": 125000,
+    "stock": 5,
+    "images": ["/images/consumables/raytools-head.webp"],
+    "short": "Original RayTools cutting head — reliable, high-precision performance.",
+    "description": "...",
+    "specs": {
+      "brand": "RayTools",
+      "model": "BM111 / BM110",
+      "focus": "Auto Focus",
+      "warranty": "12 Months"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9da",
+    "sku": "CON-004",
+    "title": "WSX Laser Cutting Head",
+    "slug": "wsx-laser-cutting-head",
+    "brand": "WSX",
+    "head": "WSX WSX-200 Head",
+    "category": "rf-cable",
+    "price": 92000,
+    "mrp": 98000,
+    "stock": 8,
+    "images": ["/images/consumables/wsx-head.webp"],
+    "short": "High-speed WSX laser head for premium cutting output.",
+    "description": "...",
+    "specs": {
+      "brand": "WSX",
+      "compatibility": "All major fiber laser machines"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9db",
+    "sku": "CON-005",
+    "title": "Protective Lens",
+    "slug": "protective-lens",
+    "brand": "Generic / Nova Laser",
+    "head": "Protective Lens STD Head",
+    "category": "consumables",
+    "price": 900,
+    "mrp": 1200,
+    "stock": 200,
+    "images": ["/images/consumables/protective-lens.webp"],
+    "short": "High-quality protection lens for fiber laser cutting heads.",
+    "description": "...",
+    "specs": {
+      "diameter": "27.9mm / 24.9mm / 20mm",
+      "coating": "Double-sided AR"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9dc",
+    "sku": "CON-006",
+    "title": "Cutting Nozzle",
+    "slug": "cutting-nozzle",
+    "brand": "Generic",
+    "head": "Nozzle STD-1 Head",
+    "category": "rf-cable",
+    "price": 120,
+    "mrp": 200,
+    "stock": 500,
+    "images": ["/images/consumables/cutting-nozzle.webp"],
+    "short": "Premium nozzles for clean and precise laser cutting.",
+    "description": "...",
+    "specs": {
+      "type": "Single / Double Layer",
+      "material": "Copper"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9dd",
+    "sku": "CON-007",
+    "title": "Ceramic Ring",
+    "slug": "ceramic-ring",
+    "brand": "Generic",
+    "head": "Ceramic Ring STD Head",
+    "category": "consumables",
+    "price": 350,
+    "mrp": 450,
+    "stock": 120,
+    "images": ["/images/consumables/ceramic-ring.webp"],
+    "short": "High-insulation ceramic ring for laser heads.",
+    "description": "...",
+    "specs": {
+      "material": "Industrial Ceramic",
+      "compatibility": "RayTools / WSX / Others"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9de",
+    "sku": "CON-008",
+    "title": "Focusing & Collimating Lens",
+    "slug": "focusing-collimating-lens",
+    "brand": "Optics (Japan-imported)",
+    "head": "Optics COL-100 Head",
+    "category": "consumables",
+    "price": 5800,
+    "mrp": 6500,
+    "stock": 60,
+    "images": ["/images/consumables/focus-collimation.webp"],
+    "short": "High-precision lenses for beam focusing & collimation.",
+    "description": "...",
+    "specs": {
+      "coating": "AR Coating",
+      "material": "Fused Silica"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9df",
+    "sku": "CON-009",
+    "title": "QBH Protective Cap",
+    "slug": "qbh-protective-cap",
+    "brand": "Generic",
+    "head": "QBH Cap STD Head",
+    "category": "rf-cable",
+    "price": 220,
+    "mrp": 300,
+    "stock": 70,
+    "images": ["/images/consumables/qbh-cap.webp"],
+    "short": "Protective cap for QBH fiber laser connectors.",
+    "description": "...",
+    "specs": {
+      "material": "Stainless Steel + Insulation Layer"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9e0",
+    "sku": "CON-010",
+    "title": "SMC Valve / Solenoid Valve",
+    "slug": "smc-valve",
+    "brand": "SMC Japan",
+    "head": "SMC SVM-100 Head",
+    "category": "consumables",
+    "price": 2600,
+    "mrp": 2800,
+    "stock": 40,
+    "images": ["/images/consumables/smc-valve.webp"],
+    "short": "Original SMC solenoid valve for laser cutting machines.",
+    "description": "...",
+    "specs": {
+      "brand": "SMC Japan",
+      "type": "Solenoid Valve"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9e1",
+    "sku": "CON-011",
+    "title": "Control Card",
+    "slug": "control-card",
+    "brand": "Generic",
+    "head": "Control Card CC-100 Head",
+    "category": "control-card",
+    "price": 13500,
+    "mrp": 15000,
+    "stock": 12,
+    "images": ["/images/consumables/control-card.webp"],
+    "short": "Control card for CNC laser systems.",
+    "description": "...",
+    "specs": {
+      "communication": "Ethernet / USB",
+      "compatibility": "CNC & Laser Controllers"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9e2",
+    "sku": "CON-012",
+    "title": "RF Cable",
+    "slug": "rf-cable",
+    "brand": "Generic",
+    "head": "RF Cable RC-1 Head",
+    "category": "rf-cable",
+    "price": 750,
+    "mrp": 900,
+    "stock": 80,
+    "images": ["/images/consumables/rf-cable.webp"],
+    "short": "High-frequency RF cable for CNC and laser systems.",
+    "description": "...",
+    "specs": {
+      "length": "1m – 3m",
+      "shielding": "Double-layer"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9e3",
+    "sku": "CON-013",
+    "title": "Laser Cutting Remote Controller",
+    "slug": "remote-controller",
+    "brand": "Generic",
+    "head": "Remote Controller RC-2 Head",
+    "category": "remote-controller",
+    "price": 3200,
+    "mrp": 3500,
+    "stock": 25,
+    "images": ["/images/consumables/remote-controller.webp"],
+    "short": "Wireless remote controller for laser cutting machines.",
+    "description": "...",
+    "specs": {
+      "wireless": "2.4GHz",
+      "range": "10–15 meters"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9e4",
+    "sku": "CON-014",
+    "title": "DNE Consumables",
+    "slug": "dne-consumables",
+    "brand": "DNE",
+    "head": "DNE STD Head",
+    "category": "dne-consumables",
+    "price": 3300,
+    "mrp": 3500,
+    "stock": 20,
+    "images": ["/images/consumables/dne.webp"],
+    "short": "Original DNE fiber laser machine consumables.",
+    "description": "...",
+    "specs": {
+      "brand": "DNE",
+      "usage": "Fiber Laser Machines"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9e5",
+    "sku": "CON-015",
+    "title": "Sensor Parts",
+    "slug": "sensor-parts",
+    "brand": "Generic",
+    "head": "Sensor SP-10 Head",
+    "category": "sensor-parts",
+    "price": 950,
+    "mrp": 1200,
+    "stock": 100,
+    "images": ["/images/consumables/sensor.webp"],
+    "short": "Industrial-grade sensor components for laser systems.",
+    "description": "...",
+    "specs": {
+      "type": "Height Sensor Components"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "69330477876744343859c9e6",
+    "sku": "CON-016",
+    "title": "Cleaning Consumables",
+    "slug": "cleaning-consumables",
+    "brand": "Generic",
+    "head": "Cleaning Kit CK-1 Head",
+    "category": "cleaning-consumables",
+    "price": 650,
+    "mrp": 800,
+    "stock": 150,
+    "images": ["/images/consumables/cleaning-consumables.webp"],
+    "short": "Cleaning tools & solutions for fiber laser maintenance.",
+    "description": "...",
+    "specs": {
+      "itemsIncluded": "Nozzle Cleaner, Air Gun, Wipes"
+    },
+    "__v": 0
+  }
+]

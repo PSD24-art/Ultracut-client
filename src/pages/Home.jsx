@@ -12,7 +12,7 @@ function Home() {
       {/* Shop by Brands */}
       <ShopByBrands />
       {/* Example consumables / other sections */}
-      <Consumables /> 
+      <Consumables />
       <ShopByHead />
     </div>
   );

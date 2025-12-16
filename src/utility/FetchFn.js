@@ -5,7 +5,7 @@ export default async function fetchFn(
   path,
   method = "GET",
   body = null,
-  opts = {}
+  opts = {},
 ) {
   const url = `${API_BASE}${path}`;
   const headers = {
@@ -16,7 +16,7 @@ export default async function fetchFn(
   const fetchOpts = {
     method,
     headers,
-    credentials: opts.credentials || "include",
+    credentials: "include",
   };
 
   if (body) fetchOpts.body = JSON.stringify(body);
