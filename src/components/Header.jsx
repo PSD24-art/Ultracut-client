@@ -90,7 +90,7 @@ function Header({ onLoginClick }) {
   const [results, setResults] = useState([]);
   const searchRef = useRef(null); // wraps input + results
 
-  const { user } = useAuth();
+  
 
   // products from context
   const { products: rawProducts, loading: productsLoading } = useProducts();
@@ -258,17 +258,17 @@ function Header({ onLoginClick }) {
                 <button
                   className="p-2 ml-1"
                   onClick={() => {
-                    if (!user) navigate("/login");
-                    else navigate("/profile");
+                    // if (!user) navigate("/login");
+                  navigate("/profile");
                   }}
                 >
-                  {user ? (
+                  {/* {user ? (
                     <User className="w-6 h-6 text-gray-700" />
-                  ) : (
+                  ) : ( */}
                     <div className="inline-block px-5 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:cursor-pointer">
                       Login
                     </div>
-                  )}
+                  {/* // )} */}
                 </button>
               </div>
             </nav>
@@ -408,7 +408,8 @@ function Header({ onLoginClick }) {
               >
                 <User className="w-5 h-5 text-gray-700" />
                 <span className="text-sm font-medium text-gray-800">
-                  {user ? "Account" : "Login"}
+                  {/* {user ? "Account" : "Login"} */}
+                  Login/Account
                 </span>
               </button>
             </div>

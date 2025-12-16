@@ -6,10 +6,9 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
  build: {
   minify: "esbuild",
-  sourcemap: false
+  sourcemap: false,
+    outDir: "dist",
 },
   base: "/",
-  build: {
-    outDir: "dist",
-  },
+
 });
