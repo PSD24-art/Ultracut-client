@@ -1,9 +1,13 @@
 // src/App.jsx
 import React, { lazy, useEffect, useState } from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-
+import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Contact from "./components/Contact";
+import HeadItemsPage from "./components/SparesByHead";
+import SparesByHead from "./components/SparesByHead";
+import HeadSelector from "./components/HeadSelector";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -11,10 +15,7 @@ const UserPage = lazy(() => import("./pages/User"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const BrandPage = lazy(() => import("./pages/BrandPage"));
 const ConsumableItems = lazy(() => import("./pages/ConsumableItems"));
-const BIndividualItem = lazy(() => import("./pages/BIndividualItems"));
-const CIndividualItem = lazy(() => import("./pages/CIndividualItem"));
-const SIndividualItem = lazy(() => import("./pages/SIndividualItems"));
-const ContactPage = lazy(() => import("./pages/static/ContactPage"));
+const IndividualItem = lazy(() => import("./pages/IndividualItems"));
 
 const LoginModal = lazy(() => import("./components/Login"));
 const Consumables = lazy(() => import("./components/Consumables"));
@@ -42,7 +43,7 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col secondary-bg-color">
         <Header onLoginClick={openLogin} />
 
         <main className="flex-grow">
@@ -51,25 +52,21 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<UserPage />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/contact" element={<ContactPage />} />
             <Route path="/brands" element={<ShopByBrands />} />
             <Route path="/brands/:brand" element={<BrandPage />} />
-            <Route path="/brands/:brand/:title" element={<BIndividualItem />} />
+            <Route path="/products/:slug" element={<IndividualItem />} />
             <Route path="/consumables" element={<Consumables />} />
-            <Route path="/consumables/:slug" element={<ConsumableItems />} />
+            <Route path="/contact" element={<Contact />} />
             <Route
-              path="/consumables/:slug/:title"
-              element={<CIndividualItem />}
+              path="/consumables/:category"
+              element={<ConsumableItems />}
             />
-            <Route path="/item/:slug/:title" element={<SIndividualItem />} />
           </Routes>
         </main>
-
         <WhatsAppButton />
         <Footer />
       </div>
 
-      {/* ✅ LOGIN MODAL OVERLAY */}
       {showLogin && <LoginModal onSuccess={closeLogin} onClose={closeLogin} />}
     </>
   );

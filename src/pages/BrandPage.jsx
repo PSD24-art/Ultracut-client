@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
+import ProductCard from "../components/ProductCard";
 
 function slugify(str = "") {
   return String(str)
@@ -10,16 +11,54 @@ function slugify(str = "") {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 }
+function addToBag(item) {
+  const raw = localStorage.getItem("uc_cart_v1");
+  const cart = raw ? JSON.parse(raw) : [];
+  const id = item._id || item.id;
+  const found = cart.find((c) => c.id === id);
+
+  if (found) found.qty = (found.qty || 1) + 1;
+  else
+    cart.push({
+      id,
+      title: item.title,
+      price: item.price,
+      mrp: item.mrp,
+      image: item.images?.[0],
+      qty: 1,
+    });
+
+  localStorage.setItem("uc_cart_v1", JSON.stringify(cart));
+  window.dispatchEvent(new CustomEvent("cart-updated", { detail: { cart } }));
+  alert(`${item.title} added to bag`);
+}
+
+function buyNow(item) {
+  navigate("/checkout", {
+    state: {
+      items: [
+        {
+          id: item._id || item.id,
+          title: item.title,
+          price: item.price,
+          qty: 1,
+        },
+      ],
+    },
+  });
+}
 
 export default function BrandPage() {
-  const { brand: brandSlug } = useParams(); // brandSlug is slugified brand in the URL
-  const { products = [], loading } = useProducts();
+  const { brand: brandSlug } = useParams();
+  console.log(brandSlug);
+
+  const products = useProducts();
 
   // canonical brand display name
   const brandName = useMemo(() => {
     if (!products.length) return decodeURIComponent(brandSlug || "");
     const brands = Array.from(
-      new Set(products.map((p) => p.brand || "Unknown"))
+      new Set(products.map((p) => p.brand || "Unknown")),
     );
     const found = brands.find((b) => slugify(b) === String(brandSlug));
     return found || decodeURIComponent(brandSlug || "");
@@ -43,13 +82,12 @@ export default function BrandPage() {
           </p>
         </div>
 
-        {loading && <div className="text-gray-600">Loading products…</div>}
-
-        {!loading && filtered.length === 0 && (
+        {filtered.length === 0 && (
           <div className="w-full py-20 flex flex-col items-center justify-center text-center">
             <p className="text-gray-600 mb-4">
               No products found for this brand.
             </p>
+            l
             <Link
               to="/"
               className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm"
@@ -59,30 +97,15 @@ export default function BrandPage() {
           </div>
         )}
 
-        {!loading && filtered.length > 0 && (
+        {filtered.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filtered.map((p) => (
-              <div
-                key={p._id || p.sku || p.slug}
-                className="bg-white border rounded-md p-3"
-              >
-                {/* Link uses brandSlug (slugified brand) and slugified product title */}
-                <Link
-                  to={`/brands/${encodeURIComponent(slugify(p.brand || ""))}/${slugify(p.title || "")}`}
-                >
-                  <div className="w-full h-40 bg-gray-100 flex items-center justify-center overflow-hidden mb-3">
-                    <img
-                      src={p.images?.[0] || ""}
-                      alt={p.title}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="text-sm font-medium text-gray-800">
-                    {p.title}
-                  </div>
-                </Link>
-                <div className="text-xs text-gray-500 mt-2">₹{p.price}</div>
-              </div>
+            {filtered.map((item) => (
+              <ProductCard
+                key={item._id || item.id}
+                item={item}
+                onAddToBag={() => addToBag(item)}
+                onBuyNow={() => buyNow(item)}
+              />
             ))}
           </div>
         )}

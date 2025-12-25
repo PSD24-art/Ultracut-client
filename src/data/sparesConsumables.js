@@ -6,7 +6,7 @@ export const sparesConsumables = [
   "Focus & Collimation Lens",
   "DNE Consumables",
   "QBH Protection Cap",
-  "RF Cable",
+  "R F Cable",
   "Remote",
   "Raytools Laser Cutting Head",
   "WSX Laser Cutting Head",
@@ -16,5 +16,5 @@ export const sparesConsumables = [
   "SMC Valve",
   "Ceramic Locking Ring",
   "Cleaning Consumables",
-  "Laser Source"
+  "Laser Source",
 ];

@@ -1,8 +1,11 @@
-import Header from "../components/Header";
 import Banner from "../components/Banner";
 import ShopByBrands from "../components/ShopByBrands";
 import Consumables from "../components/Consumables";
-import ShopByHead from "../components/ShopByHead";
+import Contact from "../components/Contact";
+import UltracutIntro from "../components/UltracutIntro";
+import AboutTeam from "./static/AboutTeam";
+import QualityInfrastructure from "./static/QualityInfrastructure";
+import HeadSelector from "../components/HeadSelector";
 
 function Home() {
   return (
@@ -13,7 +16,12 @@ function Home() {
       <ShopByBrands />
       {/* Example consumables / other sections */}
       <Consumables />
-      <ShopByHead />
+      <HeadSelector />
+      <UltracutIntro />
+      <AboutTeam />
+      <QualityInfrastructure />
+      <Contact />
+      {/* <CompanyProfile /> */}
     </div>
   );
 }

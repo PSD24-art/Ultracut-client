@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+.main-bg-color {
+  @apply bg-gray-700;
+}
+
+.secondary-bg-color {
+  @apply bg-gray-100;
+}
+
+.btn-color {
+  @apply bg-pink-700;
+}
+
+.highlighted-text {
+  @apply text-pink-700;
+}

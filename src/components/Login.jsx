@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import fetchFn from "../utility/FetchFn";
 import { useAuth } from "../contexts/AuthContext";
+import Logo from "../assets/Logo-Photoroom.png";
 
 export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
   const { login, setUser } = useAuth();
@@ -253,101 +254,122 @@ export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
   };
 
   if (!show) return null;
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
       aria-modal="true"
       role="dialog"
     >
+      {/* BACKDROP */}
       <div
-        className="absolute inset-0 bg-black/50"
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={closeModal}
         aria-hidden="true"
       />
 
-      <div className="relative bg-white rounded-lg shadow-xl w-[420px] max-w-[95%] p-6 z-10 overflow-auto flex flex-col">
-        <div className="flex justify-between items-start">
-          <h3 className="text-lg font-semibold">
-            {step === "phone"
-              ? "Login / Signup"
-              : step === "otp"
-                ? "Enter OTP"
-                : "Complete your profile"}
-          </h3>
+      {/* MODAL */}
+      <div className="relative bg-white rounded-2xl shadow-2xl w-[420px] max-w-[95%] z-10 overflow-hidden">
+        {/* HEADER */}
+        <div className="relative px-6 pt-6 pb-4 border-b">
+          {/* CLOSE */}
           <button
             onClick={closeModal}
-            className="text-gray-500 hover:text-gray-700"
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-lg"
             aria-label="Close"
           >
             ✕
           </button>
+
+          {/* LOGO CENTER */}
+          <div className="flex justify-center">
+            <img
+              src={Logo}
+              alt="Ultracut Logo"
+              className="h-10 object-contain"
+            />
+          </div>
+
+          {/* TITLE */}
+          <h3 className="text-xl font-semibold text-gray-900 text-center mt-4">
+            {step === "phone"
+              ? "Login / Signup"
+              : step === "otp"
+                ? "Verify OTP"
+                : "Complete Your Profile"}
+          </h3>
+
+          {/* SUBTEXT */}
+          <p className="text-sm text-gray-600 text-center mt-1 leading-relaxed">
+            {step === "phone"
+              ? "Enter your mobile number to receive a secure OTP."
+              : step === "otp"
+                ? `Enter the 6-digit OTP sent to +91 ${phone}`
+                : "A few details to complete your registration."}
+          </p>
         </div>
 
-        <p className="text-sm text-gray-600 mt-2">
-          {step === "phone"
-            ? "Only Indian mobile numbers are allowed. We'll send a 6-digit OTP."
-            : step === "otp"
-              ? "Enter the 6-digit code sent to +91 " + phone
-              : "Finish your profile to complete sign up."}
-        </p>
+        {/* BODY */}
+        <div className="px-6 py-5">
+          {err && (
+            <p className="text-sm text-red-600 mb-3 text-center">{err}</p>
+          )}
+          {infoMsg && (
+            <p className="text-sm text-green-600 mb-3 text-center">{infoMsg}</p>
+          )}
 
-        {err && <p className="text-sm text-red-600 mt-3">{err}</p>}
-        {infoMsg && <p className="text-sm text-green-600 mt-3">{infoMsg}</p>}
+          {/* PHONE STEP */}
+          {step === "phone" && (
+            <>
+              <label className="text-xs font-medium text-gray-700">
+                Mobile Number
+              </label>
 
-        {step === "phone" && (
-          <>
-            <div className="mt-5">
-              <label className="text-xs font-medium text-gray-700">Phone</label>
-              <div className="mt-2 flex gap-2 items-center">
-                <span className="inline-flex items-center px-3 py-2 bg-gray-100 border rounded text-sm select-none">
+              <div className="mt-2 flex items-center gap-2">
+                <span className="px-3 py-2 bg-gray-100 border rounded-lg text-sm select-none">
                   +91
                 </span>
                 <input
                   type="tel"
                   inputMode="numeric"
-                  pattern="[0-9]*"
                   maxLength={10}
                   value={phone}
                   onChange={(e) => {
                     const raw = e.target.value.replace(/\D/g, "");
                     setPhone(raw.slice(0, 10));
                   }}
-                  placeholder="Enter 10 digit phone number"
-                  className="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
+                  placeholder="10 digit mobile number"
+                  className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-200"
                 />
               </div>
-            </div>
 
-            <div className="mt-6 flex gap-3">
-              <button
-                onClick={sendOtp}
-                disabled={sending}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-60"
-              >
-                {sending ? "Sending..." : "Request OTP"}
-              </button>
-              <button
-                onClick={() => {
-                  setPhone("");
-                  setErr("");
-                }}
-                className="px-4 py-2 border rounded"
-              >
-                Reset
-              </button>
-            </div>
-          </>
-        )}
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={sendOtp}
+                  disabled={sending}
+                  className="flex-1 px-4 py-2 btn-color text-white rounded-lg font-medium disabled:opacity-60"
+                >
+                  {sending ? "Sending OTP..." : "Request OTP"}
+                </button>
 
-        {step === "otp" && (
-          <>
-            <div className="mt-6">
+                <button
+                  onClick={() => {
+                    setPhone("");
+                    setErr("");
+                  }}
+                  className="px-4 py-2 border rounded-lg"
+                >
+                  Reset
+                </button>
+              </div>
+            </>
+          )}
+
+          {/* OTP STEP */}
+          {step === "otp" && (
+            <>
               <div
-                className="flex justify-center gap-2"
+                className="flex justify-center gap-3 mt-4"
                 onPaste={handleOtpPaste}
-                role="group"
-                aria-label="OTP input"
               >
                 {otpDigits.map((digit, idx) => (
                   <input
@@ -360,118 +382,100 @@ export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
                     onKeyDown={(e) => handleOtpKeyDown(e, idx)}
                     maxLength={1}
                     inputMode="numeric"
-                    className="w-12 h-12 text-center text-lg border rounded focus:outline-none focus:ring focus:ring-blue-200"
-                    aria-label={`OTP digit ${idx + 1}`}
+                    className="w-12 h-12 text-center text-lg font-semibold border rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200"
                   />
                 ))}
               </div>
 
-              <div className="mt-4 flex justify-between items-center text-sm">
-                <div>
-                  <button
-                    onClick={() => {
-                      setStep("phone");
-                      setOtpDigits(new Array(6).fill(""));
-                    }}
-                    className="text-blue-600 hover:underline"
-                  >
-                    Edit phone
-                  </button>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={resendOtp}
-                    disabled={resendCooldown > 0}
-                    className="text-sm text-gray-700 underline disabled:opacity-50"
-                  >
-                    {resendCooldown > 0
-                      ? `Resend in ${resendCooldown}s`
-                      : "Resend OTP"}
-                  </button>
-                </div>
-              </div>
-
-              <div className="mt-4">
+              <div className="mt-4 flex justify-between text-sm">
                 <button
                   onClick={() => {
-                    if (otpDigits.some((d) => d === "")) {
-                      setErr("Enter all 6 digits");
-                      return;
-                    }
-                    verifyOtp(otpDigits.join(""));
+                    setStep("phone");
+                    setOtpDigits(new Array(6).fill(""));
                   }}
-                  disabled={verifying}
-                  className="w-full px-4 py-2 bg-green-600 text-white rounded disabled:opacity-60"
+                  className="highlighted-text hover:underline"
                 >
-                  {verifying ? "Verifying..." : "Verify OTP"}
+                  Edit number
+                </button>
+
+                <button
+                  onClick={resendOtp}
+                  disabled={resendCooldown > 0}
+                  className="underline disabled:opacity-50"
+                >
+                  {resendCooldown > 0
+                    ? `Resend in ${resendCooldown}s`
+                    : "Resend OTP"}
                 </button>
               </div>
-            </div>
-          </>
-        )}
-
-        {step === "completeProfile" && (
-          <form onSubmit={submitCompleteProfile} className="mt-4 space-y-3">
-            <div>
-              <label className="text-xs font-medium text-gray-700">Phone</label>
-              <div className="mt-1 px-3 py-2 border rounded bg-gray-50 select-none">{`+91 ${phone}`}</div>
-            </div>
-
-            <div>
-              <label className="text-xs font-medium text-gray-700">Name</label>
-              <input
-                value={profileName}
-                onChange={(e) => setProfileName(e.target.value)}
-                className="w-full px-3 py-2 border rounded mt-1"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-medium text-gray-700">Email</label>
-              <input
-                value={profileEmail}
-                onChange={(e) => setProfileEmail(e.target.value)}
-                className="w-full px-3 py-2 border rounded mt-1"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-medium text-gray-700">
-                Company
-              </label>
-              <input
-                value={profileCompany}
-                onChange={(e) => setProfileCompany(e.target.value)}
-                className="w-full px-3 py-2 border rounded mt-1"
-              />
-            </div>
-
-            <div className="flex gap-3 pt-2">
-              <button
-                type="submit"
-                disabled={profileLoading}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-60"
-              >
-                {profileLoading ? "Saving..." : "Complete Profile"}
-              </button>
 
               <button
-                type="button"
-                onClick={async () => {
-                  await revokeSession();
-                  closeModalCleanup();
+                onClick={() => {
+                  if (otpDigits.some((d) => d === "")) {
+                    setErr("Enter all 6 digits");
+                    return;
+                  }
+                  verifyOtp(otpDigits.join(""));
                 }}
-                className="px-4 py-2 border rounded"
+                disabled={verifying}
+                className="w-full mt-5 px-4 py-2 bg-green-600 text-white rounded-lg font-medium disabled:opacity-60"
               >
-                Cancel
+                {verifying ? "Verifying..." : "Verify OTP"}
               </button>
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              You must complete your profile to finish signing up.
-            </p>
-          </form>
-        )}
+            </>
+          )}
+
+          {/* COMPLETE PROFILE */}
+          {step === "completeProfile" && (
+            <form onSubmit={submitCompleteProfile} className="space-y-3">
+              <div className="text-sm bg-gray-50 border rounded-lg px-3 py-2">
+                +91 {phone}
+              </div>
+
+              {[
+                ["Name", profileName, setProfileName],
+                ["Email", profileEmail, setProfileEmail],
+                ["Company", profileCompany, setProfileCompany],
+              ].map(([label, value, setter]) => (
+                <div key={label}>
+                  <label className="text-xs font-medium text-gray-700">
+                    {label}
+                  </label>
+                  <input
+                    value={value}
+                    onChange={(e) => setter(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-lg mt-1"
+                  />
+                </div>
+              ))}
+
+              <div className="flex gap-3 pt-3">
+                <button
+                  type="submit"
+                  disabled={profileLoading}
+                  className="flex-1 px-4 py-2 btn-color text-white rounded-lg font-medium disabled:opacity-60"
+                >
+                  {profileLoading ? "Saving..." : "Complete Profile"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await revokeSession();
+                    closeModalCleanup();
+                  }}
+                  className="px-4 py-2 border rounded-lg"
+                >
+                  Cancel
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-500 text-center">
+                Completing profile is mandatory to continue.
+              </p>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );

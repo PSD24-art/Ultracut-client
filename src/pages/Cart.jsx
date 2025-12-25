@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Plus, Minus } from "lucide-react";
@@ -43,12 +42,24 @@ export default function Cart() {
   function updateQty(itemId, newQty) {
     if (newQty < 1) return;
     setCart((prev) =>
-      prev.map((it) => (it.id === itemId ? { ...it, qty: newQty } : it))
+      prev.map((it) => (it.id === itemId ? { ...it, qty: newQty } : it)),
     );
   }
 
-  function removeFromCart(itemId) {
-    setCart((prev) => prev.filter((it) => it.id !== itemId));
+  function removeFromCart(productId) {
+    const isConfirm = confirm(
+      "Are you sure you want to remove this item from the cart?",
+    );
+    if (!isConfirm) return;
+
+    setCart((prev) => {
+      const updated = prev.filter((it) => it.id !== productId);
+
+      localStorage.setItem("uc_cart_v1", JSON.stringify(updated));
+      window.dispatchEvent(new Event("cart-updated"));
+
+      return updated;
+    });
   }
 
   async function applyCoupon() {
@@ -110,7 +121,7 @@ export default function Cart() {
           onClose={onLoginClose}
         />
       )}
-      <div className="w-full min-h-[60vh] bg-white py-10">
+      <div className="w-full min-h-[60vh] secondary-bg-color py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
 

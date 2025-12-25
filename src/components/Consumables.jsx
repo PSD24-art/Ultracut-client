@@ -1,4 +1,5 @@
 // src/components/Consumables.jsx
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
 
@@ -13,71 +14,64 @@ function normalizeProducts(raw) {
 export default function Consumables() {
   const navigate = useNavigate();
   const rawProducts = useProducts();
-
   const products = normalizeProducts(rawProducts);
 
-  // filter only items that belong to category 'consumables' (case-insensitive)
-  const consumableItems = products.filter(
-    (p) => String(p.category || "").toLowerCase() === "consumables",
-  );
+  // extract unique categories
+  const categories = useMemo(() => {
+    const map = new Map();
 
-  // dedupe by slug (keep first occurrence)
-  const seen = new Set();
-  const unique = [];
-  for (const it of consumableItems) {
-    const s = String(it.slug || "").toLowerCase();
-    if (!s) continue;
-    if (seen.has(s)) continue;
-    seen.add(s);
-    unique.push(it);
-  }
+    for (const p of products) {
+      if (!p.category) continue;
+      const key = String(p.category).toLowerCase();
 
-  // sort by title
-  unique.sort((a, b) =>
-    String(a.title || "").localeCompare(String(b.title || "")),
-  );
+      if (!map.has(key)) {
+        map.set(key, {
+          slug: key,
+          title: key.replace(/-/g, " "),
+          image: p.images?.[0] || "/images/placeholder.png",
+        });
+      }
+    }
 
-  if (!unique.length) {
+    return Array.from(map.values()).sort((a, b) =>
+      a.title.localeCompare(b.title),
+    );
+  }, [products]);
+
+  if (!categories.length) {
     return (
-      <div className="w-full py-20 text-center text-red-500">
-        No consumables available.
+      <div className="w-full py-20 text-center text-gray-500">
+        No consumable categories found.
       </div>
     );
   }
 
-  function handleClick(slug) {
-    navigate(`/consumables/${slug}`);
-  }
-
   return (
-    <section className="w-full py-10 bg-white">
+    <section className="w-full py-8 secondary-bg-color secondary-bg-color">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl sm:text-3xl font-semibold mb-8 text-gray-800">
-          Fiber Laser Machine Consumables
+          Consumables
         </h1>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-12 gap-x-8">
-          {unique.map((item) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
+          {categories.map((cat) => (
             <div
-              key={item._id || item.slug}
-              onClick={() => handleClick(item.slug)}
-              className="group bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md cursor-pointer"
+              key={cat.slug}
+              onClick={() => navigate(`/consumables/${cat.slug}`)}
+              className="cursor-pointer border rounded-lg overflow-hidden hover:shadow-md transition"
             >
-              <div className="w-full h-32 bg-gray-100 flex items-center justify-center overflow-hidden">
+              <div className="h-32 bg-gray-100 flex items-center justify-center">
                 <img
-                  src={
-                    item.images?.[0] || item.image || "/images/placeholder.png"
-                  }
-                  width={""}
-                  lazy="loading"
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  src={cat.image}
+                  alt={cat.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
-              <div className="p-3">
-                <h2 className="text-sm font-medium text-gray-800 group-hover:text-blue-600">
-                  {item.title}
+              <div className="p-3 text-center">
+                <h2 className="text-sm font-medium text-gray-800 capitalize">
+                  {cat.title}
                 </h2>
               </div>
             </div>

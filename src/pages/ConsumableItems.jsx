@@ -1,38 +1,40 @@
-// src/pages/Items.jsx
+// src/pages/ConsumableItems.jsx
 import React, { useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
 import ProductCard from "../components/ProductCard";
 
-export default function ConsumableItems() {
-  const { slug } = useParams(); // example: "ceramic-ring"
-  const navigate = useNavigate();
-  const { products, loading } = useProducts();
+function normalizeProducts(raw) {
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw;
+  if (raw.data && Array.isArray(raw.data)) return raw.data;
+  if (raw.products && Array.isArray(raw.products)) return raw.products;
+  return [];
+}
 
-  // If still loading, show a simple loading state
-  if (loading) {
-    return (
-      <div className="w-full py-20 text-center text-gray-600">
-        Loading products...
-      </div>
-    );
-  }
+export default function ConsumableItems() {
+  const { category } = useParams();
+  const navigate = useNavigate();
+  const rawProducts = useProducts();
+  const products = normalizeProducts(rawProducts);
 
   const list = useMemo(() => {
-    if (!products) return [];
     return products.filter(
-      (p) => String(p.slug).toLowerCase() === String(slug).toLowerCase()
+      (p) =>
+        String(p.category || "").toLowerCase() ===
+        String(category).toLowerCase(),
     );
-  }, [products, slug]);
+  }, [products, category]);
 
   function addToBag(item) {
     const raw = localStorage.getItem("uc_cart_v1");
     const cart = raw ? JSON.parse(raw) : [];
+
     const id = item._id || item.id;
     const found = cart.find((c) => c.id === id);
 
     if (found) found.qty = (found.qty || 1) + 1;
-    else
+    else {
       cart.push({
         id,
         title: item.title,
@@ -41,9 +43,10 @@ export default function ConsumableItems() {
         image: item.images?.[0],
         qty: 1,
       });
+    }
 
     localStorage.setItem("uc_cart_v1", JSON.stringify(cart));
-    window.dispatchEvent(new CustomEvent("cart-updated", { detail: { cart } }));
+    window.dispatchEvent(new Event("cart-updated"));
     alert(`${item.title} added to bag`);
   }
 
@@ -63,11 +66,11 @@ export default function ConsumableItems() {
   }
 
   return (
-    <section className="w-full py-10 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-10 secondary-bg-color">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
-            {slug.replace(/-/g, " ")}
+          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 capitalize">
+            {category.replace(/-/g, " ")}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
             {list.length} product{list.length !== 1 ? "s" : ""}
@@ -75,9 +78,9 @@ export default function ConsumableItems() {
         </div>
 
         {list.length === 0 ? (
-          <div className="w-full py-20 flex flex-col items-center justify-center text-center">
+          <div className="w-full py-20 text-center">
             <p className="text-gray-600 mb-4">
-              No products found for this consumable.
+              No products found for this category.
             </p>
             <Link
               to="/consumables"

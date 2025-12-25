@@ -20,41 +20,41 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState(null);
 
-  // 3️⃣ Background verification (does NOT block render)
-  useEffect(() => {
-    let cancelled = false;
+  // // 3️⃣ Background verification (does NOT block render)
+  // useEffect(() => {
+  //   let cancelled = false;
 
-    const verifyUser = async () => {
-      try {
-        const data = await fetchFn("/user/me", "GET");
+  //   const verifyUser = async () => {
+  //     try {
+  //       const data = await fetchFn("/user/me", "GET");
 
-        if (cancelled) return;
-        if (data?.user) {
-          console.log(data);
+  //       if (cancelled) return;
+  //       if (data?.user) {
+  //         console.log(data);
 
-          setUser(data.user);
-          localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(data.user));
-          setAuthError(null);
-        } else {
-          setUser(null);
-          localStorage.removeItem(USER_SNAPSHOT_KEY);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          console.warn("Auth verification failed:", err?.message || err);
-          setUser(null);
-          localStorage.removeItem(USER_SNAPSHOT_KEY);
-          setAuthError(err?.message || "Auth check failed");
-        }
-      }
-    };
+  //         setUser(data.user);
+  //         localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(data.user));
+  //         setAuthError(null);
+  //       } else {
+  //         setUser(null);
+  //         localStorage.removeItem(USER_SNAPSHOT_KEY);
+  //       }
+  //     } catch (err) {
+  //       if (!cancelled) {
+  //         console.warn("Auth verification failed:", err?.message || err);
+  //         setUser(null);
+  //         localStorage.removeItem(USER_SNAPSHOT_KEY);
+  //         setAuthError(err?.message || "Auth check failed");
+  //       }
+  //     }
+  //   };
 
-    verifyUser();
+  //   verifyUser();
 
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  //   return () => {
+  //     cancelled = true;
+  //   };
+  // }, []);
 
   // 4️⃣ Called after OTP verify / login success
   const login = async (maybeUser = null) => {
