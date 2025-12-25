@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { slugify } from "../utility/Slugify";
 
 export default function ProductCard({ item, onAddToBag, onBuyNow }) {
+  const navigate = useNavigate();
   return (
     <div
-      onClick={() => Navigate(`/products/${item.slug}`)}
+      onClick={() => navigate(`/products/${item.slug}`)}
       className="group hover:cursor-pointer bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition"
     >
       {/* Product Image */}
@@ -27,7 +28,7 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
         </h2>
 
         <div className="mt-1 text-xs text-gray-500">
-          {item.brand} • {item.head}
+          {item.brand.toUpperCase()}
         </div>
 
         {/* Price Section */}

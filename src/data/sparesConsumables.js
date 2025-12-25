@@ -3,7 +3,7 @@ export const sparesConsumables = [
   "Protective Lens",
   "Cutting Nozzle",
   "Ceramic Ring",
-  "Focus & Collimation Lens",
+  "Focus and Collimation Lens",
   "DNE Consumables",
   "QBH Protection Cap",
   "R F Cable",

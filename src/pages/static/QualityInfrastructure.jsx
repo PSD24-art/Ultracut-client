@@ -1,6 +1,6 @@
 function QualityInfrastructure() {
   return (
-    <section className="w-full bg-white">
+    <section className="w-full secondary-bg-color">
       {/* IMAGE SECTION */}
       <div className="relative w-full">
         <img
@@ -15,7 +15,7 @@ function QualityInfrastructure() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 -mt-24 sm:-mt-32 md:-mt-36 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* QUALITY CONTROL CARD */}
-          <div className="bg-gray-100 rounded-2xl p-8 sm:p-10 shadow-lg">
+          <div className="secondary-bg-color rounded-2xl p-8 sm:p-10 shadow-lg">
             <h3 className="text-xl sm:text-2xl font-extrabold highlighted-text mb-4">
               Quality Control
             </h3>

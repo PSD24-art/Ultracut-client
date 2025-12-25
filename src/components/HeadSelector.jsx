@@ -35,16 +35,17 @@ const SECTIONS = [
 function slugifyHead(head) {
   return head
     .toLowerCase()
-    .replace(" plus", " plus")
+    .replace(" plus", "-plus")
     .replace(" head", "")
     .replace(/\s+/g, "-");
 }
-console.log("HeadSelector rendered");
+
 export default function HeadSelector() {
+  console.log("HeadSelector rendered"); // ✅ correct place
   const navigate = useNavigate();
 
   return (
-    <section className="w-full py-10 secondary-bg-color">
+    <section className="w-full py-10 bg-gray-100">
       <div className="max-w-6xl mx-auto px-4 space-y-10">
         {SECTIONS.map((sec) => (
           <div key={sec.title}>
@@ -60,13 +61,13 @@ export default function HeadSelector() {
                   <div
                     key={slug}
                     onClick={() => navigate(`/spares-by-head/${slug}`)}
-                    className="group cursor-pointer bg-white border rounded-lg p-4 hover:shadow-md transition"
+                    className="cursor-pointer bg-white border rounded-lg p-4 hover:shadow-md transition"
                   >
-                    <div className="h-20 bg-gray-100 rounded-md flex items-center justify-center text-xs text-gray-500 text-center px-2">
+                    <div className="h-20 bg-gray-100 rounded-md flex items-center justify-center text-xs text-gray-600 text-center px-2">
                       {head}
                     </div>
 
-                    <div className="mt-3 text-sm font-medium text-gray-800 group-hover:text-red-600">
+                    <div className="mt-3 text-sm font-medium text-gray-800">
                       {head.replace(" Head", "")}
                     </div>
 

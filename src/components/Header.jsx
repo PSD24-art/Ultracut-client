@@ -25,6 +25,13 @@ function Header({ onLoginClick }) {
   const consumablesRef = useRef(null);
   const sparesRef = useRef(null);
 
+  function slugifyHead(head) {
+    return head
+      .toLowerCase()
+      .replace(" plus", "-plus")
+      .replace(" head", "")
+      .replace(/\s+/g, "-");
+  }
   //Debaouce effext for search
   useEffect(() => {
     if (!query.trim()) {
@@ -170,12 +177,15 @@ function Header({ onLoginClick }) {
               </div>
 
               {showSparesByHead && (
-                <div className="absolute top-full mt-2 w-72 bg-white border rounded-xl shadow-lg z-50 ">
+                <div className="absolute top-full mt-2 w-72 bg-white border rounded-xl shadow-lg z-50 text-gray-800">
                   {sparesByHead.map((item) => (
                     <div
                       key={item}
-                      className="px-4 py-2 text-sm hover:bg-gray-100  hover:rounded-xl cursor-pointer"
-                      onClick={() => setShowSparesByHead(false)}
+                      onClick={() => {
+                        setShowSparesByHead(false);
+                        navigate(`/spares-by-head/${slugifyHead(item)}`);
+                      }}
+                      className="px-4 py-2 text-sm hover:bg-gray-100 hover:rounded-xl cursor-pointer"
                     >
                       {item}
                     </div>

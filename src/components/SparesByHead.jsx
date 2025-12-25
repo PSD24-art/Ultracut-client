@@ -63,11 +63,15 @@ export default function SparesByHead() {
     return [];
   }, [rawProducts]);
 
-  // FILTER BY HEAD (many-to-many)
   const filtered = useMemo(() => {
-    return products.filter((product) =>
-      product.head?.some((h) => normalizeHead(h) === head),
-    );
+    return products.filter((product) => {
+      if (!product.head) return false;
+
+      // Normalize head into array
+      const heads = Array.isArray(product.head) ? product.head : [product.head];
+
+      return heads.some((h) => normalizeHead(h) === head);
+    });
   }, [products, head]);
 
   return (

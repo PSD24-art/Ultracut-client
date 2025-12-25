@@ -57,6 +57,7 @@ function App() {
             <Route path="/products/:slug" element={<IndividualItem />} />
             <Route path="/consumables" element={<Consumables />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/spares-by-head/:head" element={<SparesByHead />} />
             <Route
               path="/consumables/:category"
               element={<ConsumableItems />}
