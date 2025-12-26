@@ -951,7 +951,7 @@
     "slug": "protective-lens-37x7",
     "brand": "ultracut",
     "head": [
-      "Raytool BM06K Head",
+      "Raytools BM06K Head",
       "RayTools BM114 Head",
       "OSPRI LC80 Head",
       "OSPRI LC608 Head",
@@ -1588,7 +1588,7 @@
     "slug": "raytool-protective-lens-37x7_12kW",
     "brand": "raytool",
     "head": [
-      "Raytool BM06K Head",
+      "Raytools BM06K Head",
       "RayTools BM114 Head",
       "RayTools BM115 Head"
     ],
@@ -1995,7 +1995,7 @@
     "slug": "wsx-precitic-cutting-nozzle-dia-28",
     "brand": "wsx",
     "head": [
-      "Raytool BM06K Head",
+      "Raytools BM06K Head",
       "OSPRI LC40 Head",
       "OSPRI LC80 Head",
       "OSPRI LC218 Head",
@@ -2379,7 +2379,7 @@
     "slug": "wsx-precitec-ceramic-ring-dia-28",
     "brand": "wsx",
     "head": [
-      "Raytool BM06K Head",
+      "Raytools BM06K Head",
       "RayTools BM114 Head",
       "RayTools BM115 Head",
       "OSPRI 80 PLUS Head",
@@ -2795,7 +2795,7 @@
     "title": "Raytool BM06k - Focusing & Collimating Lens with Assembly",
     "slug": "raytool-bm06k-focusing-and-collimating-lens-with-assembly",
     "brand": "raytool",
-    "head": ["Raytool BM06K Head"],
+    "head": ["Raytools BM06K Head"],
     "category": "focus-and-collimation-lens",
     "capacity": [],
     "styles": [],
@@ -3793,7 +3793,7 @@
     "brand": "wsx",
     "head": [
       "RayTools BM111 Head",
-      "Raytool BM06K Head",
+      "Raytools BM06K Head",
       "RayTools BM115 Head",
       "RayTools BT220 Head",
       "OSPRI 80 PLUS Head",
@@ -3840,7 +3840,7 @@
     "head": [
       "RayTools BM111 Head",
       "RayTools BM110 Head",
-      "Raytool BM06K Head",
+      "Raytools BM06K Head",
       "RayTools BM109 Head",
       "RayTools BM115 Head",
       "RayTools BT220 Head",
@@ -3887,7 +3887,7 @@
     "head": [
       "RayTools BM111 Head",
       "RayTools BM110 Head",
-      "Raytool BM06K Head",
+      "Raytools BM06K Head",
       "RayTools BM109 Head",
       "RayTools BM115 Head"
     ],
@@ -4150,7 +4150,7 @@
     "title": "RayTools BM06K Auto Focus Laser Cutting Head",
     "slug": "raytools-bm06k-auto-focus-laser-cutting-head",
     "brand": "raytool",
-    "head": ["Raytool BM06K Head"],
+    "head": ["Raytools BM06K Head"],
     "category": "raytools-laser-cutting-head",
     "capacity": [],
     "styles": [],
@@ -4440,7 +4440,7 @@
     "title": "Raytools BM06K Sensor Head",
     "slug": "raytools-bm06k-sensor-head",
     "brand": "raytool",
-    "head": ["Raytool BM06K Head"],
+    "head": ["Raytools BM06K Head"],
     "category": "sensor-head",
     "capacity": [],
     "styles": [],
@@ -4465,7 +4465,7 @@
     "title": "WSX NC30 Sensor Head",
     "slug": "wsx-nc30-sensor-head",
     "brand": "wsx",
-    "head": ["Raytool BM06K Head"],
+    "head": ["Raytools BM06K Head"],
     "category": "sensor-head",
     "capacity": [],
     "styles": [],
@@ -4631,7 +4631,7 @@
     "title": "Ceramic Lockig Ring - Raytool BM06k",
     "slug": "ceramic-locking-ring-raytool-bm06k",
     "brand": "raytool",
-    "head": ["Raytool BM06K Head"],
+    "head": ["Raytools BM06K Head"],
     "category": "ceramic-locking-ring",
     "capacity": [],
     "styles": [],

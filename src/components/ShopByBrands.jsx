@@ -78,7 +78,7 @@ export default function ShopByBrands() {
 
   return (
     <section id="brands" className="w-full py-8 secondary-bg-color ">
-      <div className="max-w-6xl mx-auto px-4  sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">
             Shop by Brands
@@ -90,21 +90,32 @@ export default function ShopByBrands() {
             View All
           </Link>
         </div>
-
         {isHome ? (
           <div className="relative">
             <div
-              className="flex gap-4 overflow-x-hidden px-6 py-2"
+              className="
+        grid grid-cols-2 gap-4
+        md:flex md:gap-4 md:overflow-x-hidden md:px-6 md:py-2
+      "
               style={{ scrollSnapType: "x mandatory" }}
             >
               {homeBrands.map((b) => (
                 <div
                   key={b.id + b.name}
                   onClick={() => openBrand(b.name)}
-                  className="group flex-shrink-0 basis-1/4 max-w-[25%] min-w-[200px] bg-white border rounded-md shadow-sm p-4 flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-md"
+                  className="
+            group
+            bg-white border rounded-md shadow-sm p-4
+            flex flex-col items-center text-center
+            cursor-pointer transition-all duration-300
+            hover:shadow-md
+
+            md:flex-shrink-0 md:basis-1/4 md:max-w-[25%] md:min-w-[200px]
+          "
                   style={{ scrollSnapAlign: "start" }}
                 >
-                  <div className=" bg-gray-100 rounded-md flex items-center justify-center mb-3 overflow-hidden">
+                  {/* IMAGE */}
+                  <div className="w-full h-20 bg-gray-100 rounded-md flex items-center justify-center mb-3 overflow-hidden">
                     {BRAND_IMAGES[b.slug] ? (
                       <img
                         src={BRAND_IMAGES[b.slug]}
@@ -119,10 +130,17 @@ export default function ShopByBrands() {
                     )}
                   </div>
 
+                  {/* NAME + ARROW */}
                   <div className="w-full flex items-center justify-between">
                     <div className="text-sm font-medium flex items-center text-gray-700">
                       {b.name.charAt(0).toUpperCase() + b.name.slice(1)}
-                      <ArrowRight className="h-4 w-4 ml-2 text-gray-500transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:text-gray-700" />
+                      <ArrowRight
+                        className="
+                  h-4 w-4 ml-2 text-gray-500
+                  transition-transform duration-300 ease-out
+                  group-hover:translate-x-2 group-hover:text-gray-700
+                "
+                      />
                     </div>
 
                     <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md ml-3">
