@@ -5,9 +5,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
-import HeadItemsPage from "./components/SparesByHead";
 import SparesByHead from "./components/SparesByHead";
-import HeadSelector from "./components/HeadSelector";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -20,7 +18,7 @@ const IndividualItem = lazy(() => import("./pages/IndividualItems"));
 const LoginModal = lazy(() => import("./components/Login"));
 const Consumables = lazy(() => import("./components/Consumables"));
 const ShopByBrands = lazy(() => import("./components/ShopByBrands"));
-const WhatsAppButton = lazy(() => import("./components/WhatsappButton"));
+const WhatsAppButton = lazy(() => import("./components/WhatsAppButton"));
 
 function App() {
   const location = useLocation();
