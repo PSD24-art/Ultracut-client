@@ -16,8 +16,9 @@ function Home() {
       <ShopByBrands />
       {/* Example consumables / other sections */}
       <Consumables />
-      <HeadSelector />
       <UltracutIntro />
+      <HeadSelector />
+
       <AboutTeam />
       <QualityInfrastructure />
       <Contact />
