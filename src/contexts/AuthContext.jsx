@@ -92,6 +92,7 @@ export function AuthProvider({ children }) {
         user,
         loading,
         authError,
+        setUser,
         login,
         logout,
       }}
