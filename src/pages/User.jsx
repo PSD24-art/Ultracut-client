@@ -5,14 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function UserPage() {
-  const { user: authUser, logout } = useAuth();
+  const { user, logout, setUser } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 
-  // initial form state — fullName & phone may be filled from authUser below
+  // initial form state — fullName & phone may be filled from user below
   const [form, setForm] = useState({
     label: "Home",
     fullName: "",
@@ -44,14 +43,14 @@ export default function UserPage() {
     loadUser();
   }, []);
 
-  // when authUser changes, prefill form.fullName & phone if available
+  // when user changes, prefill form.fullName & phone if available
   useEffect(() => {
     setForm((f) => ({
       ...f,
-      fullName: authUser?.name || f.fullName,
-      phone: authUser?.phone || f.phone,
+      fullName: user?.name || f.fullName,
+      phone: user?.phone || f.phone,
     }));
-  }, [authUser]);
+  }, [user]);
 
   function updateField(key, value) {
     setForm((s) => ({ ...s, [key]: value }));
@@ -98,11 +97,11 @@ export default function UserPage() {
       alert("Address added successfully.");
       setShowForm(false);
 
-      // clear non-prefilled fields only (keep fullName & phone as they came from authUser)
+      // clear non-prefilled fields only (keep fullName & phone as they came from user)
       setForm((prev) => ({
         ...prev,
         label: "Home",
-        // keep fullName & phone as they were (authUser or user)
+        // keep fullName & phone as they were (user or user)
         pincode: "",
         state: "",
         city: "",
@@ -139,9 +138,9 @@ export default function UserPage() {
 
   const addresses = Array.isArray(user.addresses) ? user.addresses : [];
 
-  // determine whether fullName / phone should be disabled (prefilled from authUser)
-  const fullNamePrefilled = Boolean(authUser?.name);
-  const phonePrefilled = Boolean(authUser?.phone);
+  // determine whether fullName / phone should be disabled (prefilled from user)
+  const fullNamePrefilled = Boolean(user?.name);
+  const phonePrefilled = Boolean(user?.phone);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -150,15 +149,15 @@ export default function UserPage() {
         <div className="flex items-center gap-4 border-b pb-4">
           <div className="h-16 w-16 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl font-bold">
             {user.name?.[0]?.toUpperCase() ||
-              authUser?.name?.[0]?.toUpperCase() ||
+              user?.name?.[0]?.toUpperCase() ||
               "U"}
           </div>
           <div>
             <h1 className="text-xl font-semibold">
-              {user.name || authUser?.name || "User"}
+              {user.name || user?.name || "User"}
             </h1>
             <p className="text-gray-600 text-sm">
-              {user.email || authUser?.email || "No email"}
+              {user.email || user?.email || "No email"}
             </p>
           </div>
         </div>
@@ -168,7 +167,7 @@ export default function UserPage() {
           <div>
             <p className="text-sm text-gray-500">Phone</p>
             <p className="text-lg font-medium">
-              {user.phone || authUser?.phone || "—"}
+              {user.phone || user?.phone || "—"}
             </p>
           </div>
 
@@ -382,8 +381,8 @@ export default function UserPage() {
                   // reset form (keep prefilled values if present)
                   setForm({
                     label: "Home",
-                    fullName: authUser?.name || "",
-                    phone: authUser?.phone || "",
+                    fullName: user?.name || "",
+                    phone: user?.phone || "",
                     pincode: "",
                     state: "",
                     city: "",
