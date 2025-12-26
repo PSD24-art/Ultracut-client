@@ -205,7 +205,6 @@ function Header({ onLoginClick }) {
                   {" "}
                   <CartBadge />
                 </div>
-
                 <ShoppingCart className="w-6 h-6 text-gray-700" />
               </button>
 
@@ -221,7 +220,12 @@ function Header({ onLoginClick }) {
               <Search className="w-6 h-6 text-gray-700" />
             </button>
             <button className="p-2" onClick={() => navigate("/cart")}>
-              <ShoppingCart className="w-7 h-7 text-gray-700" />
+              <div className="absolute top-3 -right-1">
+                {" "}
+                <CartBadge />
+              </div>
+
+              <ShoppingCart className="w-6 h-6 text-gray-700" />
             </button>
           </div>
         </div>
@@ -266,6 +270,7 @@ function Header({ onLoginClick }) {
 
       {/* ================= MOBILE DRAWER ================= */}
       <MobileDrawer
+        onLoginClick={onLoginClick}
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
         mobileSubDrawer={mobileSubDrawer}

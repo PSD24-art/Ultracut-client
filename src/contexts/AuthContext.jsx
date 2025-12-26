@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
 import fetchFn from "../utility/FetchFn";
 
@@ -6,81 +5,76 @@ const AuthContext = createContext(null);
 const USER_SNAPSHOT_KEY = "user_snapshot";
 
 export function AuthProvider({ children }) {
-  // 1️⃣ Hydrate user instantly from localStorage (UI hint only)
-  const [user, setUser] = useState(() => {
-    try {
-      const cached = localStorage.getItem(USER_SNAPSHOT_KEY);
-      return cached ? JSON.parse(cached) : null;
-    } catch {
-      return null;
-    }
-  });
-
-  // 2️⃣ Loading is now NON-BLOCKING
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
-  // // 3️⃣ Background verification (does NOT block render)
-  // useEffect(() => {
-  //   let cancelled = false;
+  // 🔑 HYDRATE USER ON APP LOAD (ONCE)
+  useEffect(() => {
+    let cancelled = false;
 
-  //   const verifyUser = async () => {
-  //     try {
-  //       const data = await fetchFn("/user/me", "GET");
+    const hydrateUser = async () => {
+      try {
+        // 1️⃣ UI hint from localStorage (instant)
+        const cached = localStorage.getItem(USER_SNAPSHOT_KEY);
+        if (cached && !cancelled) {
+          setUser(JSON.parse(cached));
+        }
 
-  //       if (cancelled) return;
-  //       if (data?.user) {
-  //         console.log(data);
+        // 2️⃣ Verify with backend
+        const data = await fetchFn("/user/me", "GET");
 
-  //         setUser(data.user);
-  //         localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(data.user));
-  //         setAuthError(null);
-  //       } else {
-  //         setUser(null);
-  //         localStorage.removeItem(USER_SNAPSHOT_KEY);
-  //       }
-  //     } catch (err) {
-  //       if (!cancelled) {
-  //         console.warn("Auth verification failed:", err?.message || err);
-  //         setUser(null);
-  //         localStorage.removeItem(USER_SNAPSHOT_KEY);
-  //         setAuthError(err?.message || "Auth check failed");
-  //       }
-  //     }
-  //   };
+        if (cancelled) return;
 
-  //   verifyUser();
+        if (data?.user) {
+          setUser(data.user);
+          localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(data.user));
+          setAuthError(null);
+        } else {
+          setUser(null);
+          localStorage.removeItem(USER_SNAPSHOT_KEY);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.warn("Auth hydration failed:", err);
+          setUser(null);
+          localStorage.removeItem(USER_SNAPSHOT_KEY);
+          setAuthError(err?.message || "Auth check failed");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
 
-  //   return () => {
-  //     cancelled = true;
-  //   };
-  // }, []);
+    hydrateUser();
 
-  // 4️⃣ Called after OTP verify / login success
-  const login = async (maybeUser = null) => {
-    // Optimistic update if backend already returned user
-    if (maybeUser) {
-      setUser(maybeUser);
-      localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(maybeUser));
-      return;
-    }
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-    // Otherwise refresh from server
+  // 🔑 CALLED AFTER OTP / LOGIN SUCCESS
+  const login = async (userFromServer = null) => {
     try {
-      const data = await fetchFn("/user/me", "GET");
+      if (userFromServer) {
+        setUser(userFromServer);
+        localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(userFromServer));
+        return;
+      }
 
+      const data = await fetchFn("/user/me", "GET");
       if (data?.user) {
         setUser(data.user);
         localStorage.setItem(USER_SNAPSHOT_KEY, JSON.stringify(data.user));
       }
     } catch (err) {
-      console.warn("login -> user/me failed", err);
+      console.warn("login failed", err);
       setUser(null);
       localStorage.removeItem(USER_SNAPSHOT_KEY);
     }
   };
 
-  // 5️⃣ Logout clears both server + UI snapshot
+  // 🔑 LOGOUT
   const logout = async () => {
     try {
       await fetchFn("/auth/logout", "GET");
@@ -96,11 +90,10 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user,
-        setUser,
-        login,
-        logout,
         loading,
         authError,
+        login,
+        logout,
       }}
     >
       {children}

@@ -95,7 +95,7 @@ export default function Checkout() {
   const totals = useMemo(() => {
     const subtotal = cart.reduce(
       (s, it) => s + (Number(it.price) || 0) * (Number(it.qty) || 1),
-      0
+      0,
     );
     const shipping = subtotal > 0 && subtotal < 2000 ? 99 : 0; // example rule
     const tax = Math.round(subtotal * 0.18);
@@ -170,7 +170,7 @@ export default function Checkout() {
 
   if (!cart || cart.length === 0) {
     return (
-      <main className="w-full py-16 bg-white">
+      <main className="w-full py-16 secondary-bg-color">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-semibold mb-4">Your cart is empty</h2>
           <p className="text-gray-600 mb-6">
@@ -193,7 +193,7 @@ export default function Checkout() {
   }
 
   return (
-    <main className="w-full py-10 bg-white">
+    <main className="w-full py-10 secondary-bg-color">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* LEFT: cart items */}
         <div className="lg:col-span-2">

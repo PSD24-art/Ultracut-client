@@ -1,5 +1,7 @@
 import { ShoppingCart, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { useEffect } from "react";
 
 /* ---------- HELPERS (same logic as desktop) ---------- */
 function slugify(text = "") {
@@ -28,8 +30,15 @@ function MobileDrawer({
   setMobileSubDrawer,
   sparesConsumables,
   sparesByHead,
+  onLoginClick,
 }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  /* ---------------- USER CLICK ---------------- */
+  const handleOnUserClick = () => {
+    if (user) navigate("/profile");
+    else onLoginClick();
+  };
 
   return (
     <div className="md:hidden">
@@ -103,10 +112,7 @@ function MobileDrawer({
 
             <button
               className="flex items-center gap-3 hover:cursor-pointer"
-              onClick={() => {
-                navigate("/user");
-                setMobileOpen(false);
-              }}
+              onClick={handleOnUserClick}
             >
               <User className="w-5 h-5" />
               <span>Login</span>
