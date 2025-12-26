@@ -1,5 +1,26 @@
 import { ShoppingCart, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+/* ---------- HELPERS (same logic as desktop) ---------- */
+function slugify(text = "") {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/\+/g, "plus")
+    .replace(/[\s&/]+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-");
+}
+
+function slugifyHead(head = "") {
+  return head
+    .toLowerCase()
+    .replace(" plus", "-plus")
+    .replace(" head", "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
 function MobileDrawer({
   mobileOpen,
   setMobileOpen,
@@ -9,9 +30,10 @@ function MobileDrawer({
   sparesByHead,
 }) {
   const navigate = useNavigate();
+
   return (
     <div className="md:hidden">
-      {/* MAIN OVERLAY */}
+      {/* ================= MAIN OVERLAY ================= */}
       <div
         className={`fixed inset-0 bg-black top-20 transition-opacity duration-300 ${
           mobileOpen
@@ -21,15 +43,25 @@ function MobileDrawer({
         onClick={() => setMobileOpen(false)}
       />
 
-      {/* MAIN DRAWER */}
+      {/* ================= MAIN DRAWER ================= */}
       <aside
         className={`fixed top-20 left-0 bottom-0 w-3/4 max-w-xs bg-white shadow-xl transform transition-transform duration-300 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="px-4 py-4 space-y-3">
-          <div className="navigationItemsMobile">Home</div>
+          {/* HOME */}
+          <div
+            className="navigationItemsMobile"
+            onClick={() => {
+              navigate("/");
+              setMobileOpen(false);
+            }}
+          >
+            Home
+          </div>
 
+          {/* CONSUMABLES */}
           <div
             className="navigationItemsMobile"
             onClick={() => setMobileSubDrawer("consumables")}
@@ -37,6 +69,7 @@ function MobileDrawer({
             Consumables
           </div>
 
+          {/* SPARES BY HEAD */}
           <div
             className="navigationItemsMobile"
             onClick={() => setMobileSubDrawer("spares")}
@@ -44,16 +77,36 @@ function MobileDrawer({
             Spares by Head
           </div>
 
-          <div className="navigationItemsMobile">Contact</div>
+          {/* CONTACT */}
+          <div
+            className="navigationItemsMobile"
+            onClick={() => {
+              navigate("/contact");
+              setMobileOpen(false);
+            }}
+          >
+            Contact
+          </div>
 
-          <div className="border-t pt-3 mt-3 space-y-2 ">
-            <button className="flex items-center gap-3 hover:cursor-pointer">
+          {/* CART & LOGIN */}
+          <div className="border-t pt-3 mt-3 space-y-2">
+            <button
+              className="flex items-center gap-3 hover:cursor-pointer"
+              onClick={() => {
+                navigate("/cart");
+                setMobileOpen(false);
+              }}
+            >
               <ShoppingCart className="w-5 h-5" />
               <span>Cart</span>
             </button>
+
             <button
               className="flex items-center gap-3 hover:cursor-pointer"
-              onClick={() => navigate("/user")}
+              onClick={() => {
+                navigate("/user");
+                setMobileOpen(false);
+              }}
             >
               <User className="w-5 h-5" />
               <span>Login</span>
@@ -94,12 +147,14 @@ function MobileDrawer({
 
           {/* SUB LIST */}
           <div className="px-4 py-4 space-y-2 overflow-y-auto h-full">
+            {/* CONSUMABLES LIST */}
             {mobileSubDrawer === "consumables" &&
               sparesConsumables.map((item) => (
                 <div
                   key={item}
                   className="px-3 py-2 rounded-md text-sm hover:bg-gray-100 cursor-pointer"
                   onClick={() => {
+                    navigate(`/consumables/${slugify(item)}`);
                     setMobileSubDrawer(null);
                     setMobileOpen(false);
                   }}
@@ -108,12 +163,14 @@ function MobileDrawer({
                 </div>
               ))}
 
+            {/* SPARES BY HEAD LIST */}
             {mobileSubDrawer === "spares" &&
               sparesByHead.map((item) => (
                 <div
                   key={item}
                   className="px-3 py-2 rounded-md text-sm hover:bg-gray-100 cursor-pointer"
                   onClick={() => {
+                    navigate(`/spares-by-head/${slugifyHead(item)}`);
                     setMobileSubDrawer(null);
                     setMobileOpen(false);
                   }}

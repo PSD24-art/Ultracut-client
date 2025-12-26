@@ -9,15 +9,16 @@ import HeadSelector from "../components/HeadSelector";
 
 function Home() {
   return (
-    <div className="w-full min-h-screen flex flex-col bg-white">
+    <div className="w-full min-h-screen flex flex-col bg-white overflow-x-hidden">
       {/* Banner */}
       <Banner />
       {/* Shop by Brands */}
       <ShopByBrands />
       {/* Example consumables / other sections */}
       <Consumables />
-      <HeadSelector />
       <UltracutIntro />
+      <HeadSelector />
+
       <AboutTeam />
       <QualityInfrastructure />
       <Contact />

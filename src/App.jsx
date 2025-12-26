@@ -41,10 +41,9 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col secondary-bg-color">
+      <div className="min-h-screen flex flex-col secondary-bg-color ">
         <Header onLoginClick={openLogin} />
-
-        <main className="flex-grow">
+        <main className="grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
