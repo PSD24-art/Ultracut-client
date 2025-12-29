@@ -5,13 +5,13 @@ import { slugify } from "../utility/Slugify";
 export default function ProductCard({ item, onAddToBag, onBuyNow }) {
   const navigate = useNavigate();
   return (
-    <div
-      onClick={() => navigate(`/products/${item.slug}`)}
-      className="group hover:cursor-pointer bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition"
-    >
+    <div className="group hover:cursor-pointer bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
       {/* Product Image */}
       <div className="block" aria-label={`View ${item.title}`}>
-        <div className="w-full h-32 bg-gray-100 flex items-center justify-center overflow-hidden">
+        <div
+          className="w-full h-32 bg-gray-100 flex items-center justify-center overflow-hidden"
+          onClick={() => navigate(`/products/${item.slug}`)}
+        >
           <img
             src={item.images?.[0] || null}
             alt={item.title}
@@ -23,7 +23,10 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
 
       {/* Product Info */}
       <div className="p-3">
-        <h2 className="text-sm font-medium text-gray-800 group-hover:underline hover:underline-offset-4 hover:cursor-pointer line-clamp-2">
+        <h2
+          className="text-sm font-medium text-gray-800 group-hover:underline  hover:cursor-pointer line-clamp-2"
+          onClick={() => navigate(`/products/${item.slug}`)}
+        >
           {item.title}
         </h2>
 

@@ -76,7 +76,7 @@ function Header({ onLoginClick }) {
   }, []);
 
   return (
-    <header className="bg-gray-300 shadow-sm sticky top-0 z-40">
+    <header className="bg-gray-300 shadow-sm fixed w-full top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ================= TOP BAR ================= */}
         <div className="h-20 flex items-center justify-between relative">

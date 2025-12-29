@@ -17,8 +17,34 @@ export default function Cart() {
   const [cart, setCart] = useState(() => {
     try {
       const raw = localStorage.getItem("uc_cart_v1");
-      return raw ? JSON.parse(raw) : [];
-    } catch {
+      if (!raw) return [];
+
+      const parsed = JSON.parse(raw);
+
+      // normalize duplicates by product id
+      const map = new Map();
+
+      for (const item of parsed) {
+        if (!item?.id) continue;
+
+        if (map.has(item.id)) {
+          // if same product exists, increase quantity
+          const existing = map.get(item.id);
+          map.set(item.id, {
+            ...existing,
+            qty: (existing.qty || 1) + (item.qty || 1),
+          });
+        } else {
+          map.set(item.id, {
+            ...item,
+            qty: item.qty || 1,
+          });
+        }
+      }
+
+      return Array.from(map.values());
+    } catch (err) {
+      console.error("Failed to normalize cart:", err);
       return [];
     }
   });
@@ -68,14 +94,6 @@ export default function Cart() {
   function onLoginSuccess(userData) {
     setShowLogin(false);
     navigate("/checkout");
-  }
-
-  if (loading) {
-    return (
-      <div className="w-full min-h-[60vh] flex items-center justify-center">
-        <Loader />
-      </div>
-    );
   }
 
   return (

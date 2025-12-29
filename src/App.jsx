@@ -43,7 +43,7 @@ function App() {
     <>
       <div className="min-h-screen flex flex-col secondary-bg-color ">
         <Header onLoginClick={openLogin} />
-        <main className="grow">
+        <main className="grow pt-20">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
