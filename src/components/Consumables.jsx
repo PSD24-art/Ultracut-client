@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
+import placeholder from "../images/placeholder.png";
 
 function normalizeProducts(raw) {
   if (!raw) return [];
@@ -28,7 +29,7 @@ export default function Consumables() {
         map.set(key, {
           slug: key,
           title: key.replace(/-/g, " "),
-          image: p.images?.[0] || "/images/placeholder.png",
+          image: p.images?.[0] || placeholder,
         });
       }
     }
@@ -62,7 +63,7 @@ export default function Consumables() {
             >
               <div className="h-32 bg-gray-100 flex items-center justify-center">
                 <img
-                  src={cat.image}
+                  src={cat.image || placeholder}
                   alt={cat.title}
                   loading="lazy"
                   className="w-full h-full object-cover"

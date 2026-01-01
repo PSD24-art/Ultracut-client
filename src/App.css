@@ -9,7 +9,7 @@
 }
 
 .btn-color {
-  @apply bg-pink-700;
+  @apply bg-pink-700 hover:cursor-pointer;
 }
 
 .highlighted-text {

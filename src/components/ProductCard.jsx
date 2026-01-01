@@ -1,11 +1,10 @@
-import React from "react";
+import placeholder from "../images/placeholder.png";
 import { useNavigate } from "react-router-dom";
-import { slugify } from "../utility/Slugify";
 
 export default function ProductCard({ item, onAddToBag, onBuyNow }) {
   const navigate = useNavigate();
   return (
-    <div className="group hover:cursor-pointer bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+    <div className="group hover:cursor-pointer bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
       {/* Product Image */}
       <div className="block" aria-label={`View ${item.title}`}>
         <div
@@ -13,7 +12,7 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
           onClick={() => navigate(`/products/${item.slug}`)}
         >
           <img
-            src={item.images?.[0] || null}
+            src={item.images?.[0] || placeholder || null}
             alt={item.title}
             lazy="loading"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -42,29 +41,28 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
             ₹{item.price}
           </div>
         </div>
+      </div>
+      {/* Buttons */}
+      <div className="my-3 flex px-3  gap-2">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onAddToBag?.(item);
+          }}
+          className="w-full px-4 py-2 btn-color text-white rounded-md text-sm font-medium hover:cursor-pointer hover:bg-blue-700 transition"
+        >
+          Add to Bag
+        </button>
 
-        {/* Buttons */}
-        <div className="mt-4 flex  gap-2">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              onAddToBag?.(item);
-            }}
-            className="w-full px-4 py-2 btn-color text-white rounded-md text-sm font-medium hover:cursor-pointer hover:bg-blue-700 transition"
-          >
-            Add to Bag
-          </button>
-
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              onBuyNow?.(item);
-            }}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:cursor-pointer text-gray-700 hover:bg-gray-50 transition"
-          >
-            Buy Now
-          </button>
-        </div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onBuyNow?.(item);
+          }}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:cursor-pointer text-gray-700 hover:bg-gray-50 transition"
+        >
+          Buy Now
+        </button>
       </div>
     </div>
   );

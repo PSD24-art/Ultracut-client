@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import fetchFn from "../utility/FetchFn";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import OrderHistory from "../components/OrderHistory";
 
 export default function UserPage() {
   const { user, logout, setUser } = useAuth();
@@ -189,6 +190,12 @@ export default function UserPage() {
               Logout
             </button>
           </div>
+        </div>
+
+        {/* ORDER HISTORY */}
+        <div className="border-t pt-6">
+          <h2 className="text-lg font-semibold mb-4">Order History</h2>
+          <OrderHistory />
         </div>
 
         {/* Addresses */}

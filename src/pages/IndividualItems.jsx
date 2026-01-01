@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
-
+import { addToBag, buyNow } from "../utility/CartUtility";
+import placeholder from "../images/placeholder.png";
 /* ---------------- Variant Button Component ---------------- */
 function VariantSelector({ label, options = [], value, onChange }) {
   if (!Array.isArray(options) || options.length === 0) return null;
@@ -64,7 +65,7 @@ export default function IndividualProduct() {
 
   /* states */
   const [mainImage, setMainImage] = useState(
-    product.images?.[0] || "/placeholder.png",
+    product.images?.[0] || placeholder,
   );
   const [qty, setQty] = useState(1);
   const [style, setStyle] = useState(product.styles?.[0] || null);
@@ -83,38 +84,6 @@ export default function IndividualProduct() {
       : 0;
 
   /* cart logic */
-  function addToBag() {
-    const cart = JSON.parse(localStorage.getItem("uc_cart_v1") || "[]");
-
-    cart.push({
-      id: product._id,
-      title: product.title,
-      price: product.price,
-      qty,
-      variant: { style, size, capacity },
-      image: product.images?.[0],
-    });
-
-    localStorage.setItem("uc_cart_v1", JSON.stringify(cart));
-    window.dispatchEvent(new Event("cart-updated"));
-    alert("Added to cart");
-  }
-
-  function buyNow() {
-    navigate("/checkout", {
-      state: {
-        items: [
-          {
-            id: product._id,
-            title: product.title,
-            price: product.price,
-            qty,
-            variant: { style, size, capacity },
-          },
-        ],
-      },
-    });
-  }
 
   return (
     <main

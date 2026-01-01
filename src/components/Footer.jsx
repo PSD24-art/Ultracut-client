@@ -84,8 +84,8 @@ function Footer() {
             <h4 className="text-sm font-semibold text-white mb-3">Contact</h4>
             <div className="space-y-2 text-sm text-gray-400">
               <div>📍 Vadodara, Gujarat, India</div>
-              <div>📞 +91 98XXXXXXXX</div>
-              <div>📧 info@ultracut.com</div>
+              <div>📞 +91 9979139392</div>
+              <div>📧 ultracut.innovation.acct@gmail.com</div>
               <div className="text-xs text-gray-500 mt-2">
                 Mon – Sat: 10:00 AM – 7:00 PM
               </div>

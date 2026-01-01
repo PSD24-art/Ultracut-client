@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import SparesByHead from "./components/SparesByHead";
+import MockPayment from "./pages/MockPayment";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -55,6 +56,8 @@ function App() {
             <Route path="/consumables" element={<Consumables />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/spares-by-head/:head" element={<SparesByHead />} />
+            <Route path="/mock-payment" element={<MockPayment />} />
+
             <Route
               path="/consumables/:category"
               element={<ConsumableItems />}

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Trash2, Plus, Minus } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import LoginModal from "../components/Login";
-import Loader from "../components/Loader";
+import CheckoutInfo from "./static/CheckoutInfo";
+import placeholder from "../images/placeholder.png";
+import { removeItem } from "../utility/CartUtility";
 
 function formatPrice(n) {
   return `₹${n.toLocaleString("en-IN")}`;
@@ -51,6 +52,7 @@ export default function Cart() {
 
   useEffect(() => {
     localStorage.setItem("uc_cart_v1", JSON.stringify(cart));
+    console.log(cart);
   }, [cart]);
 
   const subtotal = cart.reduce((s, it) => s + it.price * it.qty, 0);
@@ -62,17 +64,6 @@ export default function Cart() {
     setCart((prev) =>
       prev.map((it) => (it.id === itemId ? { ...it, qty: newQty } : it)),
     );
-  }
-
-  function removeFromCart(productId) {
-    if (!confirm("Remove item from cart?")) return;
-
-    setCart((prev) => {
-      const updated = prev.filter((it) => it.id !== productId);
-      localStorage.setItem("uc_cart_v1", JSON.stringify(updated));
-      window.dispatchEvent(new Event("cart-updated"));
-      return updated;
-    });
   }
 
   function checkout() {
@@ -120,58 +111,70 @@ export default function Cart() {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-4">
-                {cart.map((item) => (
+                {cart.map((it) => (
                   <div
-                    key={item.id}
-                    className="flex gap-4 p-4 border rounded-lg"
+                    key={it.id}
+                    className="flex gap-4 items-center border rounded-md p-3"
                   >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-28 h-28 object-contain bg-gray-100 rounded"
-                    />
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center overflow-hidden rounded">
+                      <img
+                        src={it.image || it.images?.[0] || placeholder}
+                        alt={it.title}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
 
                     <div className="flex-1">
-                      <Link
-                        to={`/consumables/${item.slug}`}
-                        className="font-semibold hover:text-blue-600"
-                      >
-                        {item.title}
-                      </Link>
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="text-sm font-medium text-gray-800">
+                            {it.title}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {it.sku ? `SKU: ${it.sku}` : ""}
+                          </div>
+                        </div>
 
-                      <div className="mt-3 flex justify-between items-center">
-                        <div className="flex items-center gap-2">
+                        <div className="text-sm text-gray-700">
+                          {formatPrice(Number(it.price) || 0)}
+                        </div>
+                      </div>
+
+                      <div className="mt-3 flex items-center justify-between gap-3 ">
+                        <div className="flex items-center border rounded overflow-hidden">
                           <button
-                            onClick={() => updateQty(item.id, item.qty - 1)}
+                            onClick={() =>
+                              updateQty(id, (Number(it.qty) || 1) - 1)
+                            }
+                            className="px-3 py-1"
                           >
-                            <Minus />
+                            -
                           </button>
-                          <span>{item.qty}</span>
+                          <div className="px-4 py-1">{it.qty || 1}</div>
                           <button
-                            onClick={() => updateQty(item.id, item.qty + 1)}
+                            onClick={() =>
+                              updateQty(id, (Number(it.qty) || 1) + 1)
+                            }
+                            className="px-3 py-1"
                           >
-                            <Plus />
+                            +
                           </button>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                          <span className="font-semibold">
-                            {formatPrice(item.price * item.qty)}
-                          </span>
-                          <button
-                            onClick={() => removeFromCart(item.id)}
-                            className="text-red-600"
-                          >
-                            <Trash2 />
-                          </button>
-                        </div>
+                        <button
+                          onClick={() => removeItem(it.id)}
+                          className="text-sm text-red-600 hover:cursor-pointer hover:underline hover:underline-offset-3"
+                        >
+                          Remove
+                        </button>
                       </div>
                     </div>
                   </div>
                 ))}
+                <CheckoutInfo />
               </div>
 
-              <aside className="bg-white border rounded-lg p-4 sticky top-24">
+              <aside className="bg-white border rounded-lg p-4 sticky top-24 lg:min-h-160 ">
                 <h2 className="font-semibold mb-4">Order Summary</h2>
 
                 <div className="flex justify-between">

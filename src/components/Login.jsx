@@ -373,6 +373,7 @@ export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
               >
                 {otpDigits.map((digit, idx) => (
                   <input
+                    disabled={verifying}
                     key={idx}
                     ref={(el) => (inputsRef.current[idx] = el)}
                     value={digit}

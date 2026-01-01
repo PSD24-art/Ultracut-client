@@ -2,6 +2,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import CheckoutInfo from "./static/CheckoutInfo";
+import { removeItem } from "../utility/CartUtility";
+import fetchFn from "../utility/FetchFn";
 
 function formatPrice(n) {
   if (typeof n !== "number") return n || "—";
@@ -34,6 +37,13 @@ export default function Checkout() {
   const [cart, setCart] = useState(() => readCart());
   const [processing, setProcessing] = useState(false);
 
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [selectedAddressObj, setSelectedAddressObj] = useState(null);
+
+  const [paymentMethod, setPaymentMethod] = useState("COD"); // COD | ONLINE
+  const [showCodTerms, setShowCodTerms] = useState(true);
+  const [codAccepted, setCodAccepted] = useState(false);
+
   // form fields
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -46,6 +56,7 @@ export default function Checkout() {
     }
     window.addEventListener("cart-updated", onCartUpdate);
     window.addEventListener("storage", onCartUpdate);
+
     return () => {
       window.removeEventListener("cart-updated", onCartUpdate);
       window.removeEventListener("storage", onCartUpdate);
@@ -88,6 +99,7 @@ export default function Checkout() {
       setName(defaultAddr.fullName || authUser.name || "");
       setPhone(defaultAddr.phone || authUser.phone || "");
       setAddress(formatAddressForTextarea(defaultAddr));
+      setSelectedAddressObj(defaultAddr);
     }
   }, [authUser]);
 
@@ -103,27 +115,6 @@ export default function Checkout() {
     return { subtotal, shipping, tax, total };
   }, [cart]);
 
-  function updateQty(itemId, qty) {
-    const updated = cart.map((c) => {
-      const id = c.id || c._id || c.sku || c.slug;
-      if (String(id) === String(itemId)) {
-        return { ...c, qty: Math.max(1, Number(qty) || 1) };
-      }
-      return c;
-    });
-    setCart(updated);
-    writeCart(updated);
-  }
-
-  function removeItem(itemId) {
-    const updated = cart.filter((c) => {
-      const id = c.id || c._id || c.sku || c.slug;
-      return String(id) !== String(itemId);
-    });
-    setCart(updated);
-    writeCart(updated);
-  }
-
   function clearCartLocal() {
     setCart([]);
     writeCart([]);
@@ -131,38 +122,39 @@ export default function Checkout() {
 
   async function placeOrder(e) {
     e.preventDefault();
+
     if (!cart.length) {
       alert("Your cart is empty.");
       return;
     }
+
     if (!name.trim() || !phone.trim() || !address.trim()) {
       alert("Please fill name, phone and shipping address.");
       return;
     }
 
     setProcessing(true);
+
     try {
       const payload = {
         customer: { name, phone, address },
         items: cart.map((it) => ({
-          id: it.id || it._id || it.sku || it.slug,
-          title: it.title,
-          price: it.price,
+          id: it.slug || it.id,
           qty: it.qty || 1,
+          paymentMethod, // "PHONEPE"
         })),
-        totals,
       };
 
-      // TODO: send payload to real order API
-      console.log("Placing order (mock):", payload);
-      await new Promise((res) => setTimeout(res, 700));
+      const data = await fetchFn("/order/new", "POST", payload);
 
-      clearCartLocal();
-      alert("Order placed successfully. Thank you!");
-      navigate("/");
+      if (data?.redirectUrl) {
+        window.location.href = data.redirectUrl; // 🔑 KEY POINT
+      } else {
+        throw new Error("Payment redirect URL not received");
+      }
     } catch (err) {
-      console.error("Place order failed", err);
-      alert("Failed to place order. Try again later.");
+      console.error(err);
+      alert("Unable to initiate payment");
     } finally {
       setProcessing(false);
     }
@@ -233,38 +225,21 @@ export default function Checkout() {
                       </div>
                     </div>
 
-                    <div className="mt-3 flex items-center gap-3">
-                      <div className="flex items-center border rounded overflow-hidden">
-                        <button
-                          onClick={() =>
-                            updateQty(id, (Number(it.qty) || 1) - 1)
-                          }
-                          className="px-3 py-1"
-                        >
-                          -
-                        </button>
-                        <div className="px-4 py-1">{it.qty || 1}</div>
-                        <button
-                          onClick={() =>
-                            updateQty(id, (Number(it.qty) || 1) + 1)
-                          }
-                          className="px-3 py-1"
-                        >
-                          +
-                        </button>
+                    <div className="mt-3 flex items-center justify-between gap-3 ">
+                      <div className="flex items-center border p-1 rounded overflow-hidden">
+                        Qty -{" "}
+                        <span className="highlighted-text font-bold">
+                          {it.qty}
+                        </span>
                       </div>
-
-                      <button
-                        onClick={() => removeItem(id)}
-                        className="text-sm text-red-600"
-                      >
-                        Remove
-                      </button>
                     </div>
                   </div>
                 </div>
               );
             })}
+          </div>
+          <div className="hidden lg:flex">
+            <CheckoutInfo />
           </div>
         </div>
 
@@ -318,22 +293,89 @@ export default function Checkout() {
             </div>
 
             <div>
-              <label className="block text-sm text-gray-700 mb-1">
-                Shipping address
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm text-gray-700">
+                  Shipping address
+                </label>
+
+                {authUser?.addresses?.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAddressModal(true)}
+                    className="text-sm text-blue-600 hover:cursor-pointer hover:underline"
+                  >
+                    Change
+                  </button>
+                )}
+              </div>
+
               <textarea
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md"
+                readOnly
+                className="w-full px-3 py-2 border rounded-md bg-gray-50 cursor-not-allowed"
                 rows={3}
-                placeholder="Address, city, pincode"
+                placeholder="Select an address"
               />
             </div>
+
+            <div className="space-y-2">
+              <h4 className="text-sm font-medium">Payment Method</h4>
+
+              {/* COD */}
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="COD"
+                  checked={paymentMethod === "COD"}
+                  onChange={() => {
+                    setPaymentMethod("COD");
+                    setShowCodTerms(true);
+                  }}
+                />
+                <span>Cash on Delivery (₹250 confirmation charge)</span>
+              </label>
+
+              {/* Online */}
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="ONLINE"
+                  checked={paymentMethod === "ONLINE"}
+                  onChange={() => {
+                    setPaymentMethod("ONLINE");
+                    setShowCodTerms(false);
+                    setCodAccepted(false);
+                  }}
+                />
+                <span>Online Payment (UPI / Card / Netbanking)</span>
+              </label>
+            </div>
+            {paymentMethod === "COD" && showCodTerms && (
+              <div className="border rounded-md p-3 bg-yellow-50 text-sm">
+                <p className="font-medium mb-1">Cash on Delivery Terms</p>
+                <ul className="list-disc ml-5 space-y-1">
+                  <li>₹250 is charged as order confirmation</li>
+                  <li>Amount is non-refundable</li>
+                  <li>Order will be dispatched only after confirmation</li>
+                </ul>
+
+                <label className="flex items-center gap-2 mt-3">
+                  <input
+                    type="checkbox"
+                    checked={codAccepted}
+                    onChange={(e) => setCodAccepted(e.target.checked)}
+                  />
+                  <span>I accept the COD terms</span>
+                </label>
+              </div>
+            )}
 
             <button
               type="submit"
               disabled={processing}
-              className="w-full px-4 py-3 bg-blue-600 text-white rounded-md"
+              className="w-full px-4 py-3 btn-color  text-white rounded-md"
             >
               {processing
                 ? "Placing order…"
@@ -354,6 +396,62 @@ export default function Checkout() {
           </form>
         </aside>
       </div>
+      <div className="lg:hidden px-6">
+        <CheckoutInfo />
+      </div>
+      {showAddressModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white w-full max-w-md rounded-lg p-4">
+            <h3 className="text-lg font-semibold mb-3">
+              Select Shipping Address
+            </h3>
+
+            <div className="space-y-3 max-h-64 overflow-y-auto">
+              {authUser.addresses.map((addr, idx) => (
+                <label
+                  key={idx}
+                  className="block border rounded-md p-3 cursor-pointer hover:bg-gray-50"
+                >
+                  <input
+                    type="radio"
+                    name="selectedAddress"
+                    className="mr-2"
+                    checked={selectedAddressObj === addr}
+                    onChange={() => setSelectedAddressObj(addr)}
+                  />
+
+                  <span className="text-sm">
+                    {formatAddressForTextarea(addr)}
+                  </span>
+                </label>
+              ))}
+            </div>
+
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                onClick={() => setShowAddressModal(false)}
+                className="px-4 py-2 border rounded-md"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={() => {
+                  if (!selectedAddressObj) {
+                    alert("Please select an address");
+                    return;
+                  }
+                  setAddress(formatAddressForTextarea(selectedAddressObj));
+                  setShowAddressModal(false);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md"
+              >
+                Use this address
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
