@@ -192,12 +192,6 @@ export default function UserPage() {
           </div>
         </div>
 
-        {/* ORDER HISTORY */}
-        <div className="border-t pt-6">
-          <h2 className="text-lg font-semibold mb-4">Order History</h2>
-          <OrderHistory />
-        </div>
-
         {/* Addresses */}
         <div>
           <div className="flex items-center justify-between mb-3">
@@ -407,6 +401,11 @@ export default function UserPage() {
             </div>
           </form>
         )}
+        {/* ORDER HISTORY */}
+        <div className="border-t pt-6">
+          <h2 className="text-lg font-semibold mb-4">Order History</h2>
+          <OrderHistory />
+        </div>
       </div>
     </div>
   );

@@ -58,7 +58,7 @@ export default function ConsumableItems() {
                 key={item._id || item.id}
                 item={item}
                 onAddToBag={() => addToBag(item)}
-                onBuyNow={() => buyNow(item)}
+                onBuyNow={() => buyNow(navigate, item)}
               />
             ))}
           </div>

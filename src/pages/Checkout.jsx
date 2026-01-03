@@ -4,30 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import CheckoutInfo from "./static/CheckoutInfo";
 import { removeItem } from "../utility/CartUtility";
+import { readCart, clearCart } from "../utility/CartUtility";
+
 import fetchFn from "../utility/FetchFn";
 
 function formatPrice(n) {
   if (typeof n !== "number") return n || "—";
   return `₹${n.toLocaleString("en-IN")}`;
-}
-
-function readCart() {
-  try {
-    const raw = localStorage.getItem("uc_cart_v1");
-    return raw ? JSON.parse(raw) : [];
-  } catch (err) {
-    console.warn("Failed to read cart", err);
-    return [];
-  }
-}
-
-function writeCart(cart) {
-  try {
-    localStorage.setItem("uc_cart_v1", JSON.stringify(cart));
-    window.dispatchEvent(new CustomEvent("cart-updated", { detail: { cart } }));
-  } catch (err) {
-    console.warn("Failed to write cart", err);
-  }
 }
 
 export default function Checkout() {
@@ -115,13 +98,13 @@ export default function Checkout() {
     return { subtotal, shipping, tax, total };
   }, [cart]);
 
-  function clearCartLocal() {
-    setCart([]);
-    writeCart([]);
-  }
-
   async function placeOrder(e) {
     e.preventDefault();
+
+    if (paymentMethod === "COD" && codAccepted === false) {
+      alert("Please accept the terms and conditions before proceeding");
+      return;
+    }
 
     if (!cart.length) {
       alert("Your cart is empty.");
@@ -314,7 +297,11 @@ export default function Checkout() {
                 readOnly
                 className="w-full px-3 py-2 border rounded-md bg-gray-50 cursor-not-allowed"
                 rows={3}
-                placeholder="Select an address"
+                placeholder={
+                  address.length === 0
+                    ? "Click on User icon to add an address to your profile first"
+                    : "Select an address"
+                }
               />
             </div>
 
@@ -385,8 +372,8 @@ export default function Checkout() {
             <button
               type="button"
               onClick={() => {
-                //Add payment flow here
-                clearCartLocal();
+                clearCart();
+                setCart([]);
                 alert("Cart cleared");
               }}
               className="w-full px-4 py-3 border rounded-md text-sm"

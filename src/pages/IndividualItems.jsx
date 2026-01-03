@@ -208,7 +208,10 @@ export default function IndividualProduct() {
             >
               Add to Bag
             </button>
-            <button onClick={buyNow} className="px-6 py-3 border rounded-md">
+            <button
+              onClick={() => buyNow(navigate, product)}
+              className="px-6 py-3 border rounded-md"
+            >
               Buy Now
             </button>
           </div>

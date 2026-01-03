@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import SparesByHead from "./components/SparesByHead";
 import MockPayment from "./pages/MockPayment";
+import OrderSuccess from "./pages/OrderSuccess";
+import PaymentFailed from "./pages/OrderFailed";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -56,8 +58,11 @@ function App() {
             <Route path="/consumables" element={<Consumables />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/spares-by-head/:head" element={<SparesByHead />} />
-            <Route path="/mock-payment" element={<MockPayment />} />
-
+            <Route path="/order-success/:orderId" element={<OrderSuccess />} />
+            <Route
+              path="/payment-failed/:orderId"
+              element={<PaymentFailed />}
+            />
             <Route
               path="/consumables/:category"
               element={<ConsumableItems />}

@@ -18,21 +18,70 @@ function formatDate(date) {
   }
 }
 
+/* ---------------- STATUS BADGE ---------------- */
+
+function StatusBadge({ label, status }) {
+  const COLORS = {
+    created: "bg-gray-100 text-gray-700",
+    processing: "bg-yellow-100 text-yellow-700",
+    shipped: "bg-blue-100 text-blue-700",
+    delivered: "bg-green-100 text-green-700",
+    cancelled: "bg-red-100 text-red-700",
+
+    initiated: "bg-yellow-100 text-yellow-700",
+    success: "bg-green-100 text-green-700",
+    failed: "bg-red-100 text-red-700",
+  };
+
+  return (
+    <div className="flex items-center gap-1 text-xs">
+      <span className="text-gray-500">{label}:</span>
+      <span
+        className={`px-2 py-1 rounded font-medium ${
+          COLORS[status] || "bg-gray-100 text-gray-700"
+        }`}
+      >
+        {status || "—"}
+      </span>
+    </div>
+  );
+}
+
+/* ---------------- MAIN COMPONENT ---------------- */
+
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+  const [retryingId, setRetryingId] = useState(null);
 
   async function loadOrders() {
-    setLoading(true);
     try {
-      const data = await fetchFn("/orders/my", "GET");
+      const data = await fetchFn("/order/my", "GET");
       setOrders(Array.isArray(data.orders) ? data.orders : []);
     } catch (err) {
-      console.error("Order fetch failed", err);
-      setError(err?.message || "Failed to load orders");
+      setError("Failed to load orders");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function retryPayment(orderId) {
+    setRetryingId(orderId);
+    try {
+      const res = await fetchFn(`/order/${orderId}/retry-payment`, "POST");
+
+      if (!res.success || !res.redirectUrl) {
+        alert(res.message || "Retry not allowed");
+        return;
+      }
+
+      window.location.href = res.redirectUrl;
+    } catch {
+      alert("Unable to retry payment");
+    } finally {
+      setRetryingId(null);
     }
   }
 
@@ -41,11 +90,7 @@ export default function OrderHistory() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="py-10 text-center text-gray-500">
-        Loading order history…
-      </div>
-    );
+    return <div className="py-10 text-center text-gray-500">Loading…</div>;
   }
 
   if (error) {
@@ -66,15 +111,20 @@ export default function OrderHistory() {
     );
   }
 
+  const visibleOrders = showAll ? orders : orders.slice(0, 4);
+
   return (
     <div className="space-y-4">
-      {orders.map((order) => {
+      {visibleOrders.map((order) => {
         const id = order._id || order.id;
 
+        const canRetry =
+          order.paymentStatus !== "success" && order.status !== "cancelled";
+
         return (
-          <div key={id} className="border rounded-lg p-4 bg-gray-50">
+          <div key={id} className="border rounded-lg p-4 bg-white">
             {/* HEADER */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div className="flex flex-col sm:flex-row sm:justify-between gap-2">
               <div>
                 <div className="text-sm font-medium">
                   Order #{id.slice(-6).toUpperCase()}
@@ -84,28 +134,16 @@ export default function OrderHistory() {
                 </div>
               </div>
 
-              <div className="text-sm">
-                <span
-                  className={`px-2 py-1 rounded text-xs font-medium ${
-                    order.status === "delivered"
-                      ? "bg-green-100 text-green-700"
-                      : order.status === "cancelled"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700"
-                  }`}
-                >
-                  {order.status || "Processing"}
-                </span>
+              <div className="flex flex-wrap gap-2">
+                <StatusBadge label="Order" status={order.status} />
+                <StatusBadge label="Payment" status={order.paymentStatus} />
               </div>
             </div>
 
             {/* ITEMS */}
             <div className="mt-3 space-y-2">
               {order.items?.map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between text-sm"
-                >
+                <div key={i} className="flex justify-between text-sm">
                   <div className="truncate pr-2">
                     {item.title} × {item.qty}
                   </div>
@@ -117,17 +155,42 @@ export default function OrderHistory() {
             </div>
 
             {/* FOOTER */}
-            <div className="border-t mt-3 pt-3 flex items-center justify-between">
+            <div className="border-t mt-3 pt-3 flex flex-col sm:flex-row sm:justify-between gap-2">
               <div className="text-sm text-gray-600">
-                Payment: {order.paymentMethod || "—"}
+                Payment Method: <b>{order.paymentMethod}</b>
               </div>
-              <div className="text-lg font-semibold text-blue-600">
-                {formatPrice(order.totalAmount)}
+
+              <div className="flex items-center gap-3">
+                <div className="text-lg font-semibold text-blue-600">
+                  {formatPrice(order.total)}
+                </div>
+
+                {canRetry && (
+                  <button
+                    onClick={() => retryPayment(id)}
+                    disabled={retryingId === id}
+                    className="px-3 py-1 text-sm rounded bg-black text-white disabled:opacity-50"
+                  >
+                    {retryingId === id ? "Retrying…" : "Retry Payment"}
+                  </button>
+                )}
               </div>
             </div>
           </div>
         );
       })}
+
+      {/* SHOW MORE */}
+      {orders.length > 4 && (
+        <div className="text-center pt-4">
+          <button
+            onClick={() => setShowAll((v) => !v)}
+            className="text-blue-600 text-sm underline"
+          >
+            {showAll ? "Show less" : "Show more"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

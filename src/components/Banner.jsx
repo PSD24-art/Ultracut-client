@@ -35,7 +35,7 @@ function Banner() {
             </p>
             <div className="mt-4 flex gap-3">
               <a
-                href="#shop"
+                href="#brands"
                 className="inline-block px-5 py-2 btn-color text-white rounded-md text-sm font-medium"
               >
                 Shop Now
