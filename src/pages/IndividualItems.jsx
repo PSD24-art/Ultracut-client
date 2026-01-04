@@ -87,7 +87,7 @@ export default function IndividualProduct() {
 
   return (
     <main
-      className="max-w-6xl mx-auto px-4 py-8"
+      className="max-w-6xl mx-auto px-4 py-6"
       itemScope
       itemType="https://schema.org/Product"
     >

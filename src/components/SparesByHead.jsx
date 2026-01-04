@@ -37,14 +37,14 @@ export default function SparesByHead() {
   }, [products, head]);
 
   return (
-    <section className="w-full py-10">
+    <section className="w-full py-6">
       <div className="max-w-7xl mx-auto px-4">
         <h1 className="text-2xl font-semibold mb-6">
           Spares for {head.replace(/-/g, " ").toUpperCase()}
         </h1>
 
         {filtered.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered.map((item) => (
               <ProductCard
                 key={item._id || item.id}

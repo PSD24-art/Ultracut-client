@@ -168,7 +168,7 @@ export default function Checkout() {
   }
 
   return (
-    <main className="w-full py-10 secondary-bg-color">
+    <main className="w-full py-6 secondary-bg-color">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* LEFT: cart items */}
         <div className="lg:col-span-2">

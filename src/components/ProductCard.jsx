@@ -49,7 +49,7 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
             e.preventDefault();
             onAddToBag?.(item);
           }}
-          className="w-full px-4 py-2 btn-color text-white rounded-md text-sm font-medium hover:cursor-pointer hover:bg-blue-700 transition"
+          className="w-full px-1 py-2 sm:px-4 sm:py-2 btn-color text-white rounded-md text-[10px] sm:text-sm font-medium hover:cursor-pointer hover:bg-blue-700 transition"
         >
           Add to Bag
         </button>
@@ -59,7 +59,7 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
             e.preventDefault();
             onBuyNow?.(item);
           }}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:cursor-pointer text-gray-700 hover:bg-gray-50 transition"
+          className="w-full px-1 py-2 sm:px-4 sm:py-2 border border-gray-300 rounded-md text-[12px] sm:text-sm font-medium hover:cursor-pointer text-gray-700 hover:bg-gray-50 transition"
         >
           Buy Now
         </button>

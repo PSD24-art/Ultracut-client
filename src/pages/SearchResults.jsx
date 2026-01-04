@@ -9,7 +9,7 @@ export default function SearchResults() {
   const { query = "", results = [] } = location.state || {};
 
   return (
-    <main className="w-full py-10 bg-white">
+    <main className="w-full py-6 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">

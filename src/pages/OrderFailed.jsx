@@ -68,7 +68,7 @@ export default function PaymentFailed() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="bg-white max-w-md w-full rounded-2xl shadow-lg p-6 text-center">
+      <div className="bg-white max-w-md w-full rounded-2xl shadow-lg p-2 text-center">
         <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
 
         <h1 className="text-2xl font-semibold text-gray-800 mb-2">

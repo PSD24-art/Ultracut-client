@@ -48,7 +48,7 @@ export default function Consumables() {
   }
 
   return (
-    <section className="w-full py-8 secondary-bg-color secondary-bg-color">
+    <section className="w-full py-6 secondary-bg-color secondary-bg-color">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl sm:text-3xl font-semibold mb-8 text-gray-800">
           Consumables

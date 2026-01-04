@@ -97,7 +97,7 @@ export default function Cart() {
         />
       )}
 
-      <div className="w-full min-h-[60vh] secondary-bg-color py-10">
+      <div className="w-full min-h-[60vh] secondary-bg-color py-6">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
 
@@ -144,7 +144,7 @@ export default function Cart() {
                         <div className="flex items-center border rounded overflow-hidden">
                           <button
                             onClick={() =>
-                              updateQty(id, (Number(it.qty) || 1) - 1)
+                              updateQty(it.id, (Number(it.qty) || 1) - 1)
                             }
                             className="px-3 py-1"
                           >
@@ -153,7 +153,7 @@ export default function Cart() {
                           <div className="px-4 py-1">{it.qty || 1}</div>
                           <button
                             onClick={() =>
-                              updateQty(id, (Number(it.qty) || 1) + 1)
+                              updateQty(it.id, (Number(it.qty) || 1) + 1)
                             }
                             className="px-3 py-1"
                           >
@@ -162,7 +162,7 @@ export default function Cart() {
                         </div>
 
                         <button
-                          onClick={() => removeItem(it.id)}
+                          onClick={() => removeItem(it.id, setCart)}
                           className="text-sm text-red-600 hover:cursor-pointer hover:underline hover:underline-offset-3"
                         >
                           Remove

@@ -90,7 +90,7 @@ export default function Contact() {
   }
 
   return (
-    <section className="w-full py-14 bg-white">
+    <section className="w-full py-6 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* ================= LEFT INFO ================= */}
