@@ -36,7 +36,7 @@ function MobileDrawer({
   const { user } = useAuth();
   /* ---------------- USER CLICK ---------------- */
   const handleOnUserClick = () => {
-    if (user) navigate("/profile");
+    if (user) navigate("/profile", { replace: true });
     else onLoginClick();
   };
 
@@ -63,7 +63,7 @@ function MobileDrawer({
           <div
             className="navigationItemsMobile"
             onClick={() => {
-              navigate("/");
+              navigate("/", { replace: true });
               setMobileOpen(false);
             }}
           >
@@ -90,7 +90,7 @@ function MobileDrawer({
           <div
             className="navigationItemsMobile"
             onClick={() => {
-              navigate("/contact");
+              navigate("/contact", { replace: true });
               setMobileOpen(false);
             }}
           >
@@ -102,7 +102,7 @@ function MobileDrawer({
             <button
               className="flex items-center gap-3 hover:cursor-pointer"
               onClick={() => {
-                navigate("/cart");
+                navigate("/cart", { replace: true });
                 setMobileOpen(false);
               }}
             >
@@ -176,7 +176,9 @@ function MobileDrawer({
                   key={item}
                   className="px-3 py-2 rounded-md text-sm hover:bg-gray-100 cursor-pointer"
                   onClick={() => {
-                    navigate(`/spares-by-head/${slugifyHead(item)}`);
+                    navigate(`/spares-by-head/${slugifyHead(item)}`, {
+                      replace: true,
+                    });
                     setMobileSubDrawer(null);
                     setMobileOpen(false);
                   }}

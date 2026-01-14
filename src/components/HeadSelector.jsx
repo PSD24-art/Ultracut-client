@@ -60,7 +60,9 @@ export default function HeadSelector() {
                 return (
                   <div
                     key={slug}
-                    onClick={() => navigate(`/spares-by-head/${slug}`)}
+                    onClick={() =>
+                      navigate(`/spares-by-head/${slug}`, { replace: true })
+                    }
                     className="cursor-pointer bg-white border rounded-lg p-4 hover:shadow-md transition"
                   >
                     <div className="h-20 bg-gray-100 rounded-md flex items-center justify-center text-xs text-gray-600 text-center px-2">

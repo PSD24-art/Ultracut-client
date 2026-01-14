@@ -1,6 +1,6 @@
 // src/pages/BrandPage.jsx
 import React, { useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContexts";
 import ProductCard from "../components/ProductCard";
 import { addToBag, buyNow } from "../utility/CartUtility";
@@ -16,6 +16,7 @@ function slugify(str = "") {
 export default function BrandPage() {
   const { brand: brandSlug } = useParams();
   console.log(brandSlug);
+  const navigate = useNavigate();
 
   const products = useProducts();
 
@@ -69,7 +70,7 @@ export default function BrandPage() {
                 key={item._id || item.id}
                 item={item}
                 onAddToBag={() => addToBag(item)}
-                onBuyNow={() => buyNow(item)}
+                onBuyNow={() => buyNow(navigate, item)}
               />
             ))}
           </div>

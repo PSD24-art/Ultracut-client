@@ -60,7 +60,7 @@ export default function ShopByBrands() {
 
   function openBrand(name) {
     console.log(encodeURIComponent(slugify(name)));
-    navigate(`/brands/${encodeURIComponent(slugify(name))}`);
+    navigate(`/brands/${encodeURIComponent(slugify(name))}`, { replace: true });
   }
 
   // Only use scrolling controls on home page
@@ -77,7 +77,7 @@ export default function ShopByBrands() {
   }
 
   return (
-    <section id="brands" className="w-full py-8 secondary-bg-color ">
+    <section id="brands" className="w-full py-6 secondary-bg-color ">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">

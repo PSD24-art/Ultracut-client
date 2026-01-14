@@ -79,12 +79,12 @@ export default function Cart() {
       return;
     }
 
-    navigate("/checkout");
+    navigate("/checkout", { replace: true });
   }
 
   function onLoginSuccess(userData) {
     setShowLogin(false);
-    navigate("/checkout");
+    navigate("/checkout", { replace: true });
   }
 
   return (
