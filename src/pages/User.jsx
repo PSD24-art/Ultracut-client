@@ -184,7 +184,7 @@ export default function UserPage() {
                 const isConfirm = confirm("Are you sure want to logout?");
                 if (!isConfirm) return;
                 await logout();
-                navigate("/");
+                navigate("/", { replace: true });
               }}
             >
               Logout

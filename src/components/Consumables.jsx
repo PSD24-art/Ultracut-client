@@ -58,7 +58,9 @@ export default function Consumables() {
           {categories.map((cat) => (
             <div
               key={cat.slug}
-              onClick={() => navigate(`/consumables/${cat.slug}`)}
+              onClick={() =>
+                navigate(`/consumables/${cat.slug}`, { replace: true })
+              }
               className="cursor-pointer border rounded-lg overflow-hidden hover:shadow-md transition"
             >
               <div className="h-32 bg-gray-100 flex items-center justify-center">

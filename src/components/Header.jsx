@@ -52,7 +52,7 @@ function Header({ onLoginClick }) {
 
   /* ---------------- USER CLICK ---------------- */
   const handleOnUserClick = () => {
-    if (user) navigate("/profile");
+    if (user) navigate("/profile", { replace: true });
     else onLoginClick();
   };
 
@@ -97,14 +97,14 @@ function Header({ onLoginClick }) {
               src={Logo}
               alt="Ultracut Logo"
               className="h-8 w-auto cursor-pointer object-contain"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { replace: true })}
             />
           </div>
 
           {/* DESKTOP LOGO */}
           <div
             className="hidden md:flex items-center cursor-pointer"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/", { replace: true })}
           >
             <img
               src={Logo}
@@ -117,7 +117,7 @@ function Header({ onLoginClick }) {
           <nav className="hidden md:flex items-center gap-8 ml-auto">
             <div
               className="navigationItemsDesktop cursor-pointer"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { replace: true })}
             >
               Home
             </div>
@@ -147,7 +147,9 @@ function Header({ onLoginClick }) {
                       key={item}
                       onClick={() => {
                         setShowConsumables(false);
-                        navigate(`/consumables/${slugify(item)}`);
+                        navigate(`/consumables/${slugify(item)}`, {
+                          replace: true,
+                        });
                       }}
                       className="px-4 py-2 text-sm hover:bg-gray-100 hover:rounded-xl cursor-pointer"
                     >
@@ -183,7 +185,9 @@ function Header({ onLoginClick }) {
                       key={item}
                       onClick={() => {
                         setShowSparesByHead(false);
-                        navigate(`/spares-by-head/${slugifyHead(item)}`);
+                        navigate(`/spares-by-head/${slugifyHead(item)}`, {
+                          replace: true,
+                        });
                       }}
                       className="px-4 py-2 text-sm hover:bg-gray-100 hover:rounded-xl cursor-pointer"
                     >
@@ -200,7 +204,10 @@ function Header({ onLoginClick }) {
                 <Search className="w-6 h-6 text-gray-700" />
               </button>
 
-              <button className="p-2" onClick={() => navigate("/cart")}>
+              <button
+                className="p-2"
+                onClick={() => navigate("/cart", { replace: true })}
+              >
                 <div className="absolute top-3 right-11">
                   {" "}
                   <CartBadge />
@@ -219,7 +226,10 @@ function Header({ onLoginClick }) {
             <button className="p-2" onClick={() => setShowSearch((v) => !v)}>
               <Search className="w-6 h-6 text-gray-700" />
             </button>
-            <button className="p-2" onClick={() => navigate("/cart")}>
+            <button
+              className="p-2"
+              onClick={() => navigate("/cart", { replace: true })}
+            >
               <div className="absolute top-3 -right-1">
                 {" "}
                 <CartBadge />

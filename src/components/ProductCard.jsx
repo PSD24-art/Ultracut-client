@@ -9,7 +9,7 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
       <div className="block" aria-label={`View ${item.title}`}>
         <div
           className="w-full h-32 bg-gray-100 flex items-center justify-center overflow-hidden"
-          onClick={() => navigate(`/products/${item.slug}`)}
+          onClick={() => navigate(`/products/${item.slug}`, { replace: true })}
         >
           <img
             src={item.images?.[0] || placeholder || null}
@@ -24,7 +24,7 @@ export default function ProductCard({ item, onAddToBag, onBuyNow }) {
       <div className="p-3">
         <h2
           className="text-sm font-medium text-gray-800 group-hover:underline  hover:cursor-pointer line-clamp-2"
-          onClick={() => navigate(`/products/${item.slug}`)}
+          onClick={() => navigate(`/products/${item.slug}`, { replace: true })}
         >
           {item.title}
         </h2>

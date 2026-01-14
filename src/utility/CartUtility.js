@@ -50,10 +50,10 @@ export function buyNow(navigate, item) {
   ];
 
   // Option A (recommended): Buy Now = only this item
-  localStorage.setItem(CART_KEY, JSON.stringify(updatedCart));
+  // localStorage.setItem(CART_KEY, JSON.stringify(updatedCart));
 
   // if  want to MERGE instead, comment above and use this
-  /*
+
   const existing = cart.find((c) => c.id === id);
   if (!existing) {
     cart.push({
@@ -67,11 +67,10 @@ export function buyNow(navigate, item) {
     });
   }
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  */
 
   window.dispatchEvent(new Event("cart-updated"));
 
-  navigate("/cart");
+  navigate("/cart", { replace: true });
 }
 
 /* ---------------- REMOVE ITEM ---------------- */

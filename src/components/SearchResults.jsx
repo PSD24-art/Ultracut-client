@@ -13,7 +13,7 @@ function SearchResults({ results, onClose }) {
         <div
           key={item._id}
           onClick={() => {
-            navigate(`/products/${item.slug}`);
+            navigate(`/products/${item.slug}`, { replace: true });
             onClose();
           }}
           className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer border-b last:border-b-0"
