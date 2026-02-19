@@ -43,7 +43,7 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col secondary-bg-color ">
+      <div className="min-h-screen flex flex-col secondary-bg-color overflow-y-auto">
         <Header onLoginClick={openLogin} />
         <main className="grow pt-20">
           <Routes>

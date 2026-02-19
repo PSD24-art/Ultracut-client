@@ -22,12 +22,23 @@
   scrollbar-width: none; /* Firefox */
 }
 
-html,
-body {
-  overscroll-behavior: none;
-  width: 100%;
+html {
+  /* Remove height: 100% or h-screen if you have it elsewhere */
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+
+body {
+  /* ALLOW the browser to handle the scroll chain naturally */
+  overscroll-behavior: auto;
+
+  /* Ensure the body can actually grow beyond the screen */
+  min-height: 100vh;
+  width: 100%;
+
+  /* Force vertical scroll visibility if needed */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .navigationItemsDesktop {
