@@ -109,14 +109,11 @@ export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
           return;
         }
 
-        // existing user -> finalize login
-        setInfoMsg("Verification successful!");
-
-        if (data.user && data.token) {
-          console.log("Token: ", data.token);
+        if (data.token) {
           localStorage.setItem("token", data.token);
-          const token = localStorage.getItem("token");
-          console.log("Stored token from localstprage:", token);
+        }
+
+        if (data.user) {
           // server returned user object, set immediately
           await login();
         }
