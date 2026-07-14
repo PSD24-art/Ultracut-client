@@ -52,6 +52,8 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await fetchFn("/auth/logout", "GET");
+      localStorage.removeItem("token");
+      localStorage.removeItem(USER_SNAPSHOT_KEY);
     } catch (e) {
       console.warn(e);
     }

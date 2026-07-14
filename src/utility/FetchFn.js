@@ -14,10 +14,6 @@ export default async function fetchFn(
     ...opts.headers,
   };
   const url = `${API_BASE}${path}`;
-  const headers = {
-    "Content-Type": "application/json",
-    headers,
-  };
 
   const fetchOpts = {
     method,
