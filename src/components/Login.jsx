@@ -112,7 +112,8 @@ export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
         // existing user -> finalize login
         setInfoMsg("Verification successful!");
 
-        if (data.user) {
+        if (data.user && data.token) {
+          localStorage.setItem("token", data.token);
           // server returned user object, set immediately
           await login();
         }
