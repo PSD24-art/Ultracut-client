@@ -6,12 +6,13 @@ import { useAuth } from "../contexts/AuthContext";
 import OrderHistory from "../components/OrderHistory";
 
 export default function UserPage() {
-  const { user, logout, setUser } = useAuth();
+  const { user, logout, refreshUser } = useAuth();
+  // console.log("user from USerpage:".user);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
-
+  console.log("User from User page: ", user);
   // initial form state — fullName & phone may be filled from user below
   const [form, setForm] = useState({
     label: "Home",
@@ -29,12 +30,9 @@ export default function UserPage() {
   // load detailed user object (addresses etc)
   async function loadUser() {
     setLoading(true);
+
     try {
-      const data = await fetchFn("/user/me", "GET");
-      if (data.user) setUser(data.user);
-    } catch (err) {
-      console.error("User fetch error:", err);
-      setUser(null);
+      await refreshUser();
     } finally {
       setLoading(false);
     }
@@ -198,7 +196,7 @@ export default function UserPage() {
             <h2 className="text-lg font-semibold">Addresses</h2>
             <div className="flex items-center gap-3">
               <div className="text-sm text-gray-500">
-                {addresses.length} saved
+                {user?.addresses?.length} saved
               </div>
               <button
                 onClick={() => setShowForm((s) => !s)}

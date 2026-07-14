@@ -7,10 +7,14 @@ export default async function fetchFn(
   body = null,
   opts = {},
 ) {
+  const token = localStorage.getItem("token");
+
   const url = `${API_BASE}${path}`;
   const headers = {
     "Content-Type": "application/json",
-    ...(opts.headers || {}),
+    ...(opts.headers || {
+      Authorization: `Bearer ${token}`,
+    }),
   };
 
   const fetchOpts = {

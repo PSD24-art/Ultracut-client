@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Logo from "../assets/Logo-Photoroom.png";
 
 export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
-  const { login, setUser } = useAuth();
+  const { login } = useAuth();
 
   const [show, setShow] = useState(true);
   const [step, setStep] = useState("phone"); // 'phone' | 'otp' | 'completeProfile'
@@ -114,9 +114,6 @@ export default function LoginModal({ onSuccess, onClose: parentOnClose }) {
 
         if (data.user) {
           // server returned user object, set immediately
-          setUser(data.user);
-        } else {
-          // cookie-based flow but server didn't return user: rehydrate from /api/user/me
           await login();
         }
 
